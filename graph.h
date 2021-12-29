@@ -1,32 +1,27 @@
-#ifndef GRAPH_
-#define GRAPH_
+#ifndef _GRAPH_H_
+#define _GRAPH_H_
 
-typedef struct GRAPH_NODE_ *pnode;;
+#include "edges.h"
+#include "nodes.h"
 
-typedef struct edge_ {
-    int weight;
-    pnode endpoint;
-    struct edge_ *next;
-} edge, *pedge;
+typedef struct Graph {
+    node_arr nodes;
+    edge_arr edges;
+    int node_size;
+    int edge_size;
+} graph, *p_graph;
+
+void init_graph();
+
+void add_node(graph *g, int id);
+
+void remove_node(graph *g, int id);
+
+void add_edge(graph *g, int src, float w, int dest);
+
+void add_Edge(graph *g, edge e);
+
+void remove_edge(graph *g, int src, int dest);
 
 
-typedef struct GRAPH_NODE_ {
-    int node_num;
-    pedge edges;
-    struct GRAPH_NODE_ *next;
-} node, *pnode;
-
-void build_graph_cmd(pnode *head);
-
-void insert_node_cmd(pnode *head);
-
-void delete_node_cmd(pnode *head);
-
-void printGraph_cmd(pnode head); //for self debug
-void deleteGraph_cmd(pnode *head);
-
-void shortsPath_cmd(pnode head);
-
-void TSP_cmd(pnode head);
-
-#endif
+#endif _GRAPH_H_
