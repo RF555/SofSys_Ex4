@@ -21,22 +21,22 @@ int dest;
 
 class edge_arr{
 edge *arr;
-size_t used;
-size_t size;
-void init_arr(edge_arr *arr, size_t init_size);
-void add(edge_arr *arr, edge e);
-void remove(edge_arr *arr, edge e);
-void free_arr(edge_arr *arr);
+int used;
+int size;
+void init_edge_arr(edge_arr *arr, int init_size);
+void add_edge(edge_arr *arr, edge e);
+void remove_edge(edge_arr *arr, edge e);
+void free_edge_arr(edge_arr *arr);
 }
 
 class node_arr{
 node *arr;
-size_t used;
-size_t size;
-void init_arr(node_arr *arr, size_t init_size);
-void add(node_arr *arr, node n);
-void remove(node_arr *arr, node n);
-void free_arr(node_arr *arr);
+int used;
+int size;
+void init_node_arr(node_arr *arr, int init_size);
+void add_node(node_arr *arr, node n);
+void remove_node(node_arr *arr, node n);
+void free_node_arr(node_arr *arr);
 }
 
 class graph{
