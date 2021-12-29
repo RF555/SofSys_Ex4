@@ -15,9 +15,9 @@ typedef struct Node {
 } node, *p_node;
 
 typedef struct NodesArr {
-    node *arr;
-    int used;
-    int size;
+    node *n_arr;
+    size_t used;
+    size_t size;
 } node_arr;
 
 int init_node_arr(node_arr *arr, int init_size);

@@ -22,22 +22,22 @@ edge *gen_edge(edge *e, int src, float w, int dest);
 }
 
 class edge_arr{
-edge *arr;
+edge *e_arr;
 int used;
 int size;
 void init_edge_arr(edge_arr *arr, int init_size);
-'void add_edge(edge_arr *arr, edge e);
-'void remove_edge(edge_arr *arr, edge e);
+void add_edge(edge_arr *arr, int src, float w, int dest);
+void remove_edge(edge_arr *arr, edge e);
 void free_edge_arr(edge_arr *arr);
 }
 
 class node_arr{
-node *arr;
+node *n_arr;
 int used;
 int size;
 void init_node_arr(node_arr *arr, int init_size);
-'void add_node(node_arr *arr, node n);
-'void remove_node(node_arr *arr, node n);
+void add_node(node_arr *arr, node n);
+void remove_node(node_arr *arr, node n);
 void free_node_arr(node_arr *arr);
 }
 
@@ -47,11 +47,11 @@ edge_arr edges;
 int node_size;
 int edge_size;
 void init_graph();
-void add_node(graph *g, int id);
-void remove_node(graph *g, int id);
-void add_edge(graph *g, int src, float w, int dest);
-void add_Edge(graph *g, edge e);
-void remove_edge(graph *g, int src, int dest);
+'void add_node(graph *g, int id);
+'void remove_node(graph *g, int id);
+'void add_edge(graph *g, int src, float w, int dest);
+'void add_Edge(graph *g, edge e);
+'void remove_edge(graph *g, int src, int dest);
 }
 
 class algo{
