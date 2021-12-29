@@ -1,9 +1,5 @@
-//
-// Created by roeyf on 28/12/2021.
-//
-
-#ifndef SOFSYS_EX4_NODES_H
-#define SOFSYS_EX4_NODES_H
+#ifndef _NODES_H
+#define _NODES_H
 
 //#include <stdio.h>
 #include "edges.h"
@@ -16,7 +12,7 @@ typedef struct Node {
     int id;
     edge_arr in_edges;
     edge_arr out_edges;
-} node;
+} node, *p_node;
 
 typedef struct NodesArr {
     node *arr;
@@ -26,11 +22,7 @@ typedef struct NodesArr {
 
 int init_node_arr(node_arr *arr, int init_size);
 
-int add_node(node_arr *arr, node n);
-
-int remove_node(node_arr *arr, node n);
-
 int free_node_arr(node_arr *arr);
 
 
-#endif //SOFSYS_EX4_NODES_H
+#endif //_NODES_H

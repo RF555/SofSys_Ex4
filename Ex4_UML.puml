@@ -7,12 +7,6 @@ edge_arr out_edges;
 node *gen_node(node *n, int id, int prev_id, int next_id);
 }
 
-class tag{
-WHITE
-GREY
-BLACK
-}
-
 class edge{
 int src;
 float w;
@@ -24,8 +18,8 @@ edge *arr;
 int used;
 int size;
 void init_edge_arr(edge_arr *arr, int init_size);
-void add_edge(edge_arr *arr, edge e);
-void remove_edge(edge_arr *arr, edge e);
+'void add_edge(edge_arr *arr, edge e);
+'void remove_edge(edge_arr *arr, edge e);
 void free_edge_arr(edge_arr *arr);
 }
 
@@ -34,8 +28,8 @@ node *arr;
 int used;
 int size;
 void init_node_arr(node_arr *arr, int init_size);
-void add_node(node_arr *arr, node n);
-void remove_node(node_arr *arr, node n);
+'void add_node(node_arr *arr, node n);
+'void remove_node(node_arr *arr, node n);
 void free_node_arr(node_arr *arr);
 }
 
@@ -48,7 +42,7 @@ void init_graph();
 void add_node(graph *g, int id);
 void remove_node(graph *g, int id);
 void add_edge(graph *g, int src, float w, int dest);
-void add_edge(graph *g, edge e);
+void add_Edge(graph *g, edge e);
 void remove_edge(graph *g, int src, int dest);
 }
 

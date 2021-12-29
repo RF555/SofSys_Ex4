@@ -1,9 +1,16 @@
-#ifndef SOFSYS_EX4_ALGO_H
-#define SOFSYS_EX4_ALGO_H
+#ifndef ALGO_H
+#define ALGO_H
+
+#include "algo.h"
+
 void A(graph *g, string input);
+
 void B(graph *g, string input);
+
 void D(graph *g, string input);
+
 float Shortest_path(graph *g, string input);
+
 void TSP(graph *g, string input);
 
-#endif //SOFSYS_EX4_ALGO_H
+#endif //ALGO_H

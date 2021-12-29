@@ -1,12 +1,13 @@
-#ifndef SOFSYS_EX4_EDGES_H
-#define SOFSYS_EX4_EDGES_H
+#ifndef _EDGES_H
+#define _EDGES_H
+
 #include <stdio.h>
 
 typedef struct Edge {
     int src;
     float w;
     int dest;
-} edge;
+} edge, *p_edge;
 
 typedef struct EdgeArr {
     edge *arr;
@@ -14,10 +15,9 @@ typedef struct EdgeArr {
     int size;
 } edge_arr;
 
-int init_arr(edge_arr *arr, int init_size);
-int add(edge_arr *arr, edge e);
-int remove(edge_arr *arr, edge e);
-int free_arr(edge_arr *arr);
+int init_edge_arr(edge_arr *arr, int init_size);
+
+int free_edge_arr(edge_arr *arr);
 
 
-#endif //SOFSYS_EX4_EDGES_H
+#endif //_EDGES_H
