@@ -1,16 +1,24 @@
 @startuml
 
+graph -> edge_arr
+graph -> node_arr
+node_arr --> node
+edge_arr --> edge
+algo --> graph
+
+
 class node{
 int id;
 edge_arr in_edges;
 edge_arr out_edges;
-node *gen_node(node *n, int id, int prev_id, int next_id);
+node *gen_node(node *n, int id);
 }
 
 class edge{
 int src;
 float w;
 int dest;
+edge *gen_edge(edge *e, int src, float w, int dest);
 }
 
 class edge_arr{
