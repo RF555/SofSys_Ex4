@@ -1,0 +1,63 @@
+@startuml
+
+class node{
+int id;
+edge_arr in_edges;
+edge_arr out_edges;
+node *gen_node(node *n, int id, int prev_id, int next_id);
+}
+
+class tag{
+WHITE
+GREY
+BLACK
+}
+
+class edge{
+int src;
+float w;
+int dest;
+}
+
+class edge_arr{
+edge *arr;
+size_t used;
+size_t size;
+void init_arr(edge_arr *arr, size_t init_size);
+void add(edge_arr *arr, edge e);
+void remove(edge_arr *arr, edge e);
+void free_arr(edge_arr *arr);
+}
+
+class node_arr{
+node *arr;
+size_t used;
+size_t size;
+void init_arr(node_arr *arr, size_t init_size);
+void add(node_arr *arr, node n);
+void remove(node_arr *arr, node n);
+void free_arr(node_arr *arr);
+}
+
+class graph{
+node_arr nodes;
+edge_arr edges;
+int node_size;
+int edge_size;
+void init_graph();
+void add_node(graph *g, int id);
+void remove_node(graph *g, int id);
+void add_edge(graph *g, int src, float w, int dest);
+void add_edge(graph *g, edge e);
+void remove_edge(graph *g, int src, int dest);
+}
+
+class algo{
+void A(graph *g, string input);
+void B(graph *g, string input);
+void D(graph *g, string input);
+float Shortest_path(graph *g, string input);
+void TSP(graph *g, string input);
+}
+
+@enduml
