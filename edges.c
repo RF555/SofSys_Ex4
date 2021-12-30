@@ -130,28 +130,30 @@ int push_edge(p_e_list pe_list, int src_, float w_, int dest_) {
     }
 }
 
-void pop_e_root(p_e_list pe_list) {
-    if (pe_list->size <= 0 || pe_list->e_root == NULL) { return; }
+int pop_e_root(p_e_list pe_list) {
+    if (pe_list->size <= 0 || pe_list->e_root == NULL) { return 0; }
     p_edge temp_e = pe_list->e_root;
     pe_list->e_root = temp_e->next_e;
     pe_list->e_root->prev_e = NULL;
     free(temp_e);
     pe_list->size -= 1;
+    return 1;
 }
 
-void pop_e_tail(p_e_list pe_list) {
-    if (pe_list->size <= 0 || pe_list->e_tail == NULL) { return; }
+int pop_e_tail(p_e_list pe_list) {
+    if (pe_list->size <= 0 || pe_list->e_tail == NULL) { return 0; }
     p_edge temp_e = pe_list->e_tail;
     pe_list->e_tail = temp_e->prev_e;
     pe_list->e_tail->next_e = NULL;
     free(temp_e);
     pe_list->size -= 1;
+    return 1;
 }
 
-void pop_e(p_e_list pe_list, edge *e_) {
-    if (e_ == NULL || pe_list->size <= 0 || pe_list->e_root == NULL) { return; }
+int pop_e(p_e_list pe_list, edge *e_) {
+    if (e_ == NULL || pe_list->size <= 0 || pe_list->e_root == NULL) { return 0; }
     p_edge temp_e = search_e(pe_list, e_);
-    if (temp_e == NULL) { return; }
+    if (temp_e == NULL) { return 0; }
     else {
         p_edge temp_prev = temp_e->prev_e;
         p_edge temp_next = temp_e->next_e;
@@ -159,6 +161,7 @@ void pop_e(p_e_list pe_list, edge *e_) {
         temp_next->prev_e = temp_prev;
         free(temp_e);
         pe_list->size -= 1;
+        return 1;
     }
 }
 
