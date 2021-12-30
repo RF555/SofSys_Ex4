@@ -9,22 +9,21 @@ enum tag {
 
 typedef struct Node {
     int id;
-    edge_list in_edges;
-    edge_list out_edges;
+    p_e_list in_edges;
+    p_e_list out_edges;
     struct Node *prev_n;
     struct Node *next_n;
 } node, *p_node;
 
-node *gen_node(node *n, int id);
+node *gen_node(int id_);
 
-int set_prev_n(node *n, node *prev);
+int free_n(node *n);
 
-int set_next_n(node *n, node *next);
-
-typedef struct NodesArr {
+/*
+typedef struct NodesList {
     node *n_arr;
-    size_t used;
     size_t size;
+//    size_t used;
 } node_list, *p_n_list;
 
 int init_node_list(node_list *n_list, int init_size);
@@ -39,5 +38,5 @@ int remove_node(node_list *n_list, int id);
 
 int free_node_list(node_list *n_list);
 
-
+*/
 #endif //_NODES_H
