@@ -1,16 +1,16 @@
 #ifndef ALGO_H
 #define ALGO_H
 
-#include "algo.h"
+#include "graph.h"
 
-void A(graph *g, string input);
+void A(graph *g, char *input);
 
-void B(graph *g, string input);
+void B(graph *g, char *input);
 
-void D(graph *g, string input);
+void D(graph *g, char *input);
 
-float Shortest_path(graph *g, string input);
+float Shortest_path(graph *g, char *input);
 
-void TSP(graph *g, string input);
+void TSP(graph *g, char *input);
 
 #endif //ALGO_H
