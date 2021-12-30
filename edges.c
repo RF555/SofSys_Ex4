@@ -119,10 +119,17 @@ p_edge search_e(p_e_list pe_list, edge *e) {
 }
 
 void push_edge(p_e_list pe_list, edge *e) {
+    if (pe_list->size <= 0 && pe_list->e_root == NULL && pe_list->e_tail == NULL) {
+        pe_list->e_root = e;
+        pe_list->e_tail = e;
+        pe_list->size = 1;
+        return;
+    }
     p_edge exist_e = search_e(pe_list, e);
     if (exist_e == NULL) {
         free(exist_e);
         set_e_tail(pe_list, e);
+        return;
     } else {
         exist_e->w = e->w;
         free(e);
