@@ -1,16 +1,18 @@
 @startuml
 
-graph -> edge_arr
-graph -> node_arr
-node_arr --> node
-edge_arr --> edge
+graph -> edge_list
+graph -> node_list
+node_list --> node
+edge_list --> edge
 algo --> graph
 
 
 class node{
 int id;
-edge_arr in_edges;
-edge_arr out_edges;
+edge_list in_edges;
+edge_list out_edges;
+node *prev_n;
+node *next_n;
 node *gen_node(node *n, int id);
 }
 
@@ -18,35 +20,41 @@ class edge{
 int src;
 float w;
 int dest;
+edge *prev_e;
+edge *next_e;
 edge *gen_edge(edge *e, int src, float w, int dest);
 }
 
-class edge_arr{
-edge *e_arr;
-int used;
+class edge_list{
+edge *e_root;
+edge *e_tail;
 int size;
-void init_edge_arr(edge_arr *arr, int init_size);
-void add_edge(edge_arr *arr, int src, float w, int dest);
-void remove_edge(edge_arr *arr, edge e);
-void free_edge_arr(edge_arr *arr);
+int init_edge_list(edge_list *e_list);
+int set_e_root(edge *e);
+int set_e_tail(edge *e);
+int add_edge(edge_list *e_list, int src, float w, int dest);
+int remove_edge(edge_list *e_list, edge e);
+int free_edge_list(edge_list *e_list);
 }
 
-class node_arr{
-node *n_arr;
-int used;
+class node_list{
+node *n_root;
+node *n_tail;
 int size;
-void init_node_arr(node_arr *arr, int init_size);
-void add_node(node_arr *arr, node n);
-void remove_node(node_arr *arr, node n);
-void free_node_arr(node_arr *arr);
+int init_node_list(node_list *n_list, int init_size);
+int set_n_root(node *n);
+int set_n_tail(node *n);
+int add_node(node_list *n_list, int id);
+int remove_node(node_list *n_list, int id);
+int free_node_list(node_list *n_list);
 }
 
 class graph{
-node_arr nodes;
-edge_arr edges;
+node_list nodes;
+edge_list edges;
 int node_size;
 int edge_size;
-void init_graph();
+int init_graph();
 'void add_node(graph *g, int id);
 'void remove_node(graph *g, int id);
 'void add_edge(graph *g, int src, float w, int dest);
@@ -55,11 +63,11 @@ void init_graph();
 }
 
 class algo{
-void A(graph *g, string input);
-void B(graph *g, string input);
-void D(graph *g, string input);
+int A(graph *g, string input);
+int B(graph *g, string input);
+int D(graph *g, string input);
 float Shortest_path(graph *g, string input);
-void TSP(graph *g, string input);
+int TSP(graph *g, string input);
 }
 
 @enduml

@@ -8,22 +8,28 @@ typedef struct Edge {
     int src;
     float w;
     int dest;
+    struct Edge *prev_e;
+    struct Edge *next_e;
 } edge, *p_edge;
 
-typedef struct EdgeArr {
-    edge *e_arr;
-    size_t used;
-    size_t size;
-} edge_arr;
+edge *gen_edge(edge *e, int src, float w, int dest);
 
-void init_edge_arr(edge_arr *arr, int init_size);
+typedef struct EdgeList {
+    edge *e_root;
+    edge *e_tail;
+    int size;
+} edge_list, *p_e_list;
 
-void add_edge(edge_arr *arr, int src, float w, int dest);
+int init_edge_list(edge_list *e_list);
 
+int set_e_root(edge *e);
 
-void remove_edge(edge_arr *arr, edge e);
+int set_e_tail(edge *e);
 
-void free_edge_arr(edge_arr *arr);
+int add_edge(edge_list *e_list, int src, float w, int dest);
 
+int remove_edge(edge_list *e_list, edge e);
+
+int free_edge_list(edge_list *e_list);
 
 #endif //_EDGES_H

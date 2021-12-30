@@ -1,9 +1,5 @@
 #include "edges.h"
 
-#define DIFF 0
-#define DIFF_W 1
-#define SAME 2
-
 enum comp {
 //    same_pos = 1, diff_pos = 2, same_w = 4, w1 = 16, w2 = 32
     same_pos = 1, diff_pos = 0, same_w = 1, w1 = 0, w2 = 0
