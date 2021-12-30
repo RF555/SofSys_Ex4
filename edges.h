@@ -14,6 +14,11 @@ typedef struct Edge {
 
 edge *gen_edge(edge *e, int src, float w, int dest);
 
+int set_prev_e(edge *e, edge *prev);
+
+int set_next_e(edge *e, edge *next);
+
+
 typedef struct EdgeList {
     edge *e_root;
     edge *e_tail;

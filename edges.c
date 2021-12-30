@@ -35,7 +35,7 @@ void add_edge(edge_arr *arr, int src, float w, int dest) {
 }
 
 
-void remove_edge(edge_arr *arr, edge e) {
+int remove_edge(edge_list *arr, edge e) {
     for (int i = 0; i < arr->used; ++i) {
 //        if (compare_edge(&arr->e_arr[i], &e) == SAME) {
         if (compare_w(&arr->e_arr[i], &e) & compare_w(&arr->e_arr[i], &e)) {
@@ -56,10 +56,11 @@ void remove_edge(edge_arr *arr, edge e) {
     }
 }
 
+edge *gen_edge(edge *e, int src, float w, int dest) {
+    return NULL;
+}
 
-void free_edge_arr(edge_arr *arr) {
-    free(arr->e_arr);
-    arr->e_arr = NULL;
-    arr->used = 0;
-    arr->size = 0;
+
+int free_edge_list(edge_list *e_list){
+    return 0;
 }

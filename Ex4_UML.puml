@@ -14,6 +14,8 @@ edge_list out_edges;
 node *prev_n;
 node *next_n;
 node *gen_node(node *n, int id);
+int set_prev_n(node *n, node *prev);
+int set_next_n(node *n, node *next);
 }
 
 class edge{
@@ -23,6 +25,8 @@ int dest;
 edge *prev_e;
 edge *next_e;
 edge *gen_edge(edge *e, int src, float w, int dest);
+int set_prev_e(edge *e, edge *prev);
+int set_next_e(edge *e, edge *next);
 }
 
 class edge_list{

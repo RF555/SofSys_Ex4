@@ -1,7 +1,6 @@
 #ifndef _NODES_H
 #define _NODES_H
 
-//#include <stdio.h>
 #include "edges.h"
 
 enum tag {
@@ -17,6 +16,10 @@ typedef struct Node {
 } node, *p_node;
 
 node *gen_node(node *n, int id);
+
+int set_prev_n(node *n, node *prev);
+
+int set_next_n(node *n, node *next);
 
 typedef struct NodesArr {
     node *n_arr;
