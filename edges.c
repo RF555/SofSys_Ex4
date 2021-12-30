@@ -35,24 +35,6 @@ edge *gen_edge(int src_, float w_, int dest_) {
     return e;
 }
 
-int set_prev_e(edge *e, edge *prev_e_) {
-    if (e == NULL) {
-        printf("MEMORY ALLOCATION ERROR\n");
-        return 0;
-    }
-    e->prev_e = prev_e_;
-    return 0;
-}
-
-int set_next_e(edge *e, edge *next_e_) {
-    if (e == NULL) {
-        printf("MEMORY ALLOCATION ERROR\n");
-        return 0;
-    }
-    e->next_e = next_e_;
-    return 0;
-}
-
 p_e_list init_edge_list() {
     p_e_list pe_list = (edge_list *) malloc(sizeof(edge_list));
     if (pe_list == NULL) {

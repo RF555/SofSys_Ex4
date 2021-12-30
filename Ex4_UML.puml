@@ -25,8 +25,6 @@ int dest;
 edge *prev_e;
 edge *next_e;
 edge *gen_edge(int src_, float w_, int dest_);
-int set_prev_e(edge *e, edge *prev_e_);
-int set_next_e(edge *e, edge *next_e_);
 }
 
 class graph{
