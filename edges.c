@@ -127,8 +127,8 @@ int push_edge(p_e_list pe_list, int src_, float w_, int dest_) {
         free(exist_e);
         return 0;
     } else {
-        free(exist_e);
-        set_e_tail(pe_list, new_pe);
+        exist_e->w = new_pe->w;
+        free(new_pe);
         return 1;
     }
 }
