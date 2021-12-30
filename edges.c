@@ -120,14 +120,14 @@ p_edge search_e(p_e_list pe_list, edge *e) {
 
 int push_edge(p_e_list pe_list, int src_, float w_, int dest_) {
     p_edge new_pe = gen_edge(src_, w_, dest_);
-    p_edge search = search_e(pe_list, new_pe);
-    if (search == NULL) {
+    p_edge exist_e = search_e(pe_list, new_pe);
+    if (exist_e == NULL) {
         printf("ERROR- EDGE ALREADY EXISTS!\n");
         free(new_pe);
-        free(search);
+        free(exist_e);
         return 0;
     } else {
-        free(search);
+        free(exist_e);
         set_e_tail(pe_list, new_pe);
         return 1;
     }
@@ -156,8 +156,11 @@ int pop_e_tail(p_e_list pe_list) {
 int pop_e(p_e_list pe_list, edge *e_) {
     if (e_ == NULL || pe_list->size <= 0 || pe_list->e_root == NULL) { return 0; }
     p_edge temp_e = search_e(pe_list, e_);
-    if (temp_e == NULL) { return 0; }
-    else {
+    if (temp_e == NULL) {
+        printf("ERROR- EDGE ALREADY EXISTS!\n");
+        free(temp_e);
+        return 0;
+    } else {
         p_edge temp_prev = temp_e->prev_e;
         p_edge temp_next = temp_e->next_e;
         temp_prev->next_e = temp_next;
