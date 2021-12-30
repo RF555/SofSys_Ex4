@@ -120,11 +120,14 @@ p_edge search_e(p_e_list pe_list, edge *e) {
 
 int push_edge(p_e_list pe_list, int src_, float w_, int dest_) {
     p_edge new_pe = gen_edge(src_, w_, dest_);
-    if (search_e(pe_list, new_pe)) {
+    p_edge search = search_e(pe_list, new_pe);
+    if (search == NULL) {
         printf("ERROR- EDGE ALREADY EXISTS!\n");
         free(new_pe);
+        free(search);
         return 0;
     } else {
+        free(search);
         set_e_tail(pe_list, new_pe);
         return 1;
     }
