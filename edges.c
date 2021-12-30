@@ -55,6 +55,7 @@ int set_e_root(p_e_list pe_list, edge *e) {
     p_edge curr_r = (edge *) malloc(sizeof(edge));
     if (curr_r == NULL) {
         printf("MEMORY ALLOCATION ERROR\n");
+        free(e);
         return 0;
     }
     curr_r = pe_list->e_root;
@@ -117,20 +118,20 @@ p_edge search_e(p_e_list pe_list, edge *e) {
     return NULL;
 }
 
-
-int push_edge(p_e_list pe_list, int src_, float w_, int dest_) {
-    p_edge new_pe = gen_edge(src_, w_, dest_);
-    p_edge exist_e = search_e(pe_list, new_pe);
+void push_edge(p_e_list pe_list, edge *e) {
+    p_edge exist_e = search_e(pe_list, e);
     if (exist_e == NULL) {
-        printf("ERROR- EDGE ALREADY EXISTS!\n");
-        free(new_pe);
         free(exist_e);
-        return 0;
+        set_e_tail(pe_list, e);
     } else {
-        exist_e->w = new_pe->w;
-        free(new_pe);
-        return 1;
+        exist_e->w = e->w;
+        free(e);
     }
+}
+
+void push_Edge(p_e_list pe_list, int src_, float w_, int dest_) {
+    p_edge new_pe = gen_edge(src_, w_, dest_);
+    push_edge(pe_list, new_pe);
 }
 
 int pop_e_root(p_e_list pe_list) {

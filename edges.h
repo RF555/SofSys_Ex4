@@ -28,13 +28,15 @@ int set_e_tail(p_e_list pe_list, edge *e);
 
 p_edge search_e(p_e_list pe_list, edge *e);
 
-int push_edge(p_e_list pe_list, int src_, float w_, int dest_);
+void push_edge(p_e_list pe_list, edge *e);
+
+void push_Edge(p_e_list pe_list, int src_, float w_, int dest_);
 
 int pop_e_root(p_e_list pe_list);
 
 int pop_e_tail(p_e_list pe_list);
 
-int  pop_e(p_e_list pe_list, edge *e_);
+int pop_e(p_e_list pe_list, edge *e_);
 
 int free_edge_list(p_e_list pe_list);
 
