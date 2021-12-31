@@ -35,6 +35,16 @@ edge *gen_edge(int src_, float w_, int dest_) {
     return e;
 }
 
+int print_e(edge *e) {
+    if (e == NULL) {
+        printf("ERROR!\n");
+    } else {
+        printf("{ src: %d, w: %f, dest: %d }\n", e->src, e->w, e->dest);
+        return 0;
+    }
+}
+
+
 p_e_list init_edge_list() {
     p_e_list pe_list = (edge_list *) malloc(sizeof(edge_list));
     if (pe_list == NULL) {
