@@ -42,4 +42,6 @@ int pop_e(p_e_list pe_list, edge *e_);
 
 int free_edge_list(p_e_list pe_list);
 
+int print_e_list(edge_list *e_list);
+
 #endif //_EDGES_H

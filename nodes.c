@@ -22,6 +22,7 @@ int free_n(node *n) {
         free_edge_list(n->in_edges);
         free_edge_list(n->out_edges);
         free(n);
+        n=NULL;
         return 1;
     }
 }

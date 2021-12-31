@@ -39,7 +39,7 @@ int print_e(edge *e) {
     if (e == NULL) {
         printf("ERROR!\n");
     } else {
-        printf("{ src: %d, w: %f, dest: %d }\n", e->src, e->w, e->dest);
+        printf("{ src: %d, w: %f, dest: %d }", e->src, e->w, e->dest);
         return 0;
     }
 }
@@ -66,6 +66,7 @@ int set_e_root(p_e_list pe_list, edge *e) {
     if (curr_r == NULL) {
         printf("MEMORY ALLOCATION ERROR\n");
         free(e);
+        e = NULL;
         return 0;
     }
     curr_r = pe_list->e_root;
@@ -73,6 +74,7 @@ int set_e_root(p_e_list pe_list, edge *e) {
     curr_r->prev_e = e;
     pe_list->e_root = e;
     free(curr_r);
+    curr_r = NULL;
     pe_list->size += 1;
     return 1;
 }
@@ -82,16 +84,10 @@ int set_e_tail(p_e_list pe_list, edge *e) {
         printf("ERROR\n");
         return 0;
     }
-    p_edge curr_t = (edge *) malloc(sizeof(edge));
-    if (curr_t == NULL) {
-        printf("MEMORY ALLOCATION ERROR\n");
-        return 0;
-    }
-    curr_t = pe_list->e_tail;
+    p_edge curr_t = pe_list->e_tail;
     e->prev_e = curr_t;
     curr_t->next_e = e;
     pe_list->e_tail = e;
-    free(curr_t);
     pe_list->size += 1;
     return 1;
 }
@@ -101,30 +97,20 @@ p_edge search_e(p_e_list pe_list, edge *e) {
         printf("ERROR\n");
         return 0;
     }
-//    p_edge curr_l=(edge *) malloc(sizeof(edge));
-//    if (curr_l == NULL) { printf("MEMORY ALLOCATION ERROR\n");return 0;}
     p_edge curr_l = pe_list->e_root;
-//    p_edge curr_r=(edge *) malloc(sizeof(edge));
-//    if (curr_r == NULL) { printf("MEMORY ALLOCATION ERROR\n");
-//        free(curr_l);
-//        return 0;}
     p_edge curr_r = pe_list->e_tail;
-    while (!compare_e(curr_l, curr_r)) {
+    while (curr_l != NULL && curr_r != NULL && !compare_e(curr_l, curr_r)) {
         if (compare_pos(e, curr_l)) {
-//            free(curr_r);
-            return curr_l; //don't forget to free curr_l later!
+            return curr_l;
         } else {
             curr_l = curr_l->next_e;
         }
-        if (compare_pos(e, curr_l)) {
-//            free(curr_l);
-            return curr_r; //don't forget to free curr_r later!
+        if (compare_pos(e, curr_r)) {
+            return curr_r;
         } else {
             curr_r = curr_r->prev_e;
         }
     }
-//    free(curr_l);
-//    free(curr_r);
     return NULL;
 }
 
@@ -137,12 +123,13 @@ void push_edge(p_e_list pe_list, edge *e) {
     }
     p_edge exist_e = search_e(pe_list, e);
     if (exist_e == NULL) {
-        free(exist_e);
+//        free(exist_e);
         set_e_tail(pe_list, e);
         return;
     } else {
         exist_e->w = e->w;
         free(e);
+        e = NULL;
     }
 }
 
@@ -152,56 +139,105 @@ void push_Edge(p_e_list pe_list, int src_, float w_, int dest_) {
 }
 
 int pop_e_root(p_e_list pe_list) {
-    if (pe_list->size <= 0 || pe_list->e_root == NULL) { return 0; }
-    p_edge temp_e = pe_list->e_root;
-    pe_list->e_root = temp_e->next_e;
-    pe_list->e_root->prev_e = NULL;
-    free(temp_e);
-    pe_list->size -= 1;
-    return 1;
+    if (pe_list->size == 1) {
+        p_edge temp = pe_list->e_root;
+        pe_list->e_tail = NULL;
+        pe_list->e_root = NULL;
+        pe_list->size = 0;
+        free(temp);
+        temp = NULL;
+        return 1;
+    } else if (pe_list->size <= 0 || pe_list->e_root == NULL) { return 0; }
+    else {
+        p_edge temp_e = pe_list->e_root;
+        pe_list->e_root = temp_e->next_e;
+        pe_list->e_root->prev_e = NULL;
+        free(temp_e);
+        temp_e = NULL;
+        pe_list->size -= 1;
+        return 1;
+    }
 }
 
 int pop_e_tail(p_e_list pe_list) {
-    if (pe_list->size <= 0 || pe_list->e_tail == NULL) { return 0; }
-    p_edge temp_e = pe_list->e_tail;
-    pe_list->e_tail = temp_e->prev_e;
-    pe_list->e_tail->next_e = NULL;
-    free(temp_e);
-    pe_list->size -= 1;
-    return 1;
+    if (pe_list->size == 1) {
+        p_edge temp = pe_list->e_tail;
+        pe_list->e_tail = NULL;
+        pe_list->e_root = NULL;
+        pe_list->size = 0;
+        free(temp);
+        temp = NULL;
+        return 1;
+    } else if (pe_list->size <= 0 || pe_list->e_tail == NULL) { return 0; }
+    else {
+        p_edge temp_e = pe_list->e_tail;
+        pe_list->e_tail = temp_e->prev_e;
+        pe_list->e_tail->next_e = NULL;
+        free(temp_e);
+        temp_e = NULL;
+        pe_list->size -= 1;
+        return 1;
+    }
 }
 
 int pop_e(p_e_list pe_list, edge *e_) {
     if (e_ == NULL || pe_list->size <= 0 || pe_list->e_root == NULL) { return 0; }
-    p_edge temp_e = search_e(pe_list, e_);
-    if (temp_e == NULL) { return 0; }
-    else {
-        p_edge temp_prev = temp_e->prev_e;
-        p_edge temp_next = temp_e->next_e;
-        temp_prev->next_e = temp_next;
-        temp_next->prev_e = temp_prev;
-        free(temp_e);
-        pe_list->size -= 1;
+    else if (compare_pos(e_, pe_list->e_root)) {
+        pop_e_root(pe_list);
         return 1;
+    } else if (compare_pos(e_, pe_list->e_tail)) {
+        pop_e_tail(pe_list);
+        return 1;
+    } else {
+
+        p_edge temp_e = search_e(pe_list, e_);
+        if (temp_e == NULL) { return 0; }
+        else {
+            p_edge temp_prev = temp_e->prev_e;
+            p_edge temp_next = temp_e->next_e;
+            temp_prev->next_e = temp_next;
+            temp_next->prev_e = temp_prev;
+            free(temp_e);
+            temp_e = NULL;
+            pe_list->size -= 1;
+            return 1;
+        }
     }
 }
 
 int free_edge_list(p_e_list pe_list) {
-    p_edge curr_e = pe_list->e_root;
-    while (curr_e != NULL) {
-        p_edge temp_e = curr_e;
-        curr_e = curr_e->next_e;
-        free(temp_e);
-        pe_list->size -= 1;
+//    p_edge curr_e = pe_list->e_root;
+//    while (curr_e != NULL) {
+//        p_edge temp_e = curr_e;
+//        curr_e = curr_e->next_e;
+//        free(temp_e);
+//        pe_list->size -= 1;
+//    }
+    while (pe_list->e_tail != NULL) {
+        pop_e_root(pe_list);
     }
     if (pe_list->size > 0 || pe_list->e_tail != NULL || pe_list->e_root != NULL) {
-        printf("ERROR- couldn't free the list!");
+        printf("ERROR- couldn't free the list!\n");
         return 0;
     } else {
         free(pe_list);
+        pe_list = NULL;
         return 1;
     }
 }
+
+int print_e_list(edge_list *e_list) {
+    printf("pe->size = %d, [ ", e_list->size);
+    p_edge pe = e_list->e_root;
+    while (pe != NULL) {
+        print_e(pe);
+        printf(", ");
+        pe = pe->next_e;
+    }
+    printf(" ] *pe_list = %p\n", e_list);
+    return 0;
+}
+
 
 /*
 void init_edge_arr(edge_arr *arr, int init_size) {
