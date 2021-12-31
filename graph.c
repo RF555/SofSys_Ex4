@@ -24,20 +24,45 @@ graph *init_graph(int n) {
 }
 
 p_node search_n(p_graph g, int id) {
-    p_node curr_l = g->n_root;
-    p_node curr_r = g->n_tail;
-    while (curr_r->id != curr_l->id) {
-        if (curr_l->id == id) {
-            return curr_l;
+    p_node curr = g->n_root;
+    while (curr != NULL) {
+        if (curr->id == id) {
+            return curr;
         } else {
-            curr_l = curr_l->next_n;
+            curr = curr->next_n;
         }
-        if (curr_r->id == id) {
-            return curr_r;
-        } else { curr_r = curr_r->prev_n; }
     }
+//    p_node curr_l = g->n_root;
+//    p_node curr_r = g->n_tail;
+//    while (curr_r->id != curr_l->id) {
+//        if (curr_l->id == id) {
+//            return curr_l;
+//        } else {
+//            curr_l = curr_l->next_n;
+//        }
+//        if (curr_r->id == id) {
+//            return curr_r;
+//        } else { curr_r = curr_r->prev_n; }
+//    }
     return NULL;
 }
+
+int add_new_node(graph *g, int id) {
+    if (g->node_size == 0) {
+        p_node n = gen_node(id);
+        g->n_root = n;
+        g->n_tail = n;
+        g->node_size = 1;
+    } else {
+        p_node n = gen_node(id);
+        p_node temp = g->n_tail;
+        temp->next_n = n;
+        n->prev_n = temp;
+        g->n_tail = n;
+    }
+    return 1;
+}
+
 
 int add_node(graph *g, int id, edge_list *new_e_list) {
     if (g->node_size == 0) {
@@ -52,10 +77,12 @@ int add_node(graph *g, int id, edge_list *new_e_list) {
     p_node exist_n = search_n(g, id);
     if (exist_n == NULL) {
         free(exist_n);
-        exist_n=NULL;
+        exist_n = NULL;
         p_node new_n = gen_node(id);
-        new_n->out_edges = new_e_list;
-        g->edge_size += new_e_list->size;
+        if (new_e_list != NULL) {
+            new_n->out_edges = new_e_list;
+            g->edge_size += new_e_list->size;
+        }
         p_node temp_n = g->n_tail;
         new_n->prev_n = temp_n;
         temp_n->next_n = new_n;
@@ -92,7 +119,7 @@ int update_in_edges(graph *g, edge_list *new_e_list) {
         if (dest_n == NULL) {
             printf("ERROR!\n");
             free(dest_n);
-            dest_n=NULL;
+            dest_n = NULL;
             return 0;
         }
         push_edge(dest_n->in_edges, curr_e);
@@ -107,23 +134,29 @@ int update_in_edges(graph *g, edge_list *new_e_list) {
     }
 }
 
+int add_edge(graph *g, int src, float w, int dest) {
+    p_edge e = gen_edge(src, w, dest);
+    add_Edge(g, e);
+    return 1;
+}
+
 int add_Edge(graph *g, edge *e) {
     p_node src_n = search_n(g, e->src);
     if (src_n == NULL) {
         printf("ERROR- SRC NODE DOESN'T EXISTS!\n");
         free(src_n);
-        src_n=NULL;
+        src_n = NULL;
         free(e);
-        e=NULL;
+        e = NULL;
         return 0;
     }
     p_node dest_n = search_n(g, e->dest);
     if (dest_n == NULL) {
         printf("ERROR- DEST NODE DOESN'T EXISTS!\n");
         free(dest_n);
-        dest_n=NULL;
+        dest_n = NULL;
         free(e);
-        e=NULL;
+        e = NULL;
         return 0;
     }
     push_edge(src_n->out_edges, e);
@@ -133,3 +166,13 @@ int add_Edge(graph *g, edge *e) {
 }
 
 
+int print_graph(p_graph g) {
+    printf("[ node_size: %d, edge_size: %d,\n", g->node_size, g->edge_size);
+    p_node temp_n = g->n_root;
+    while (temp_n != NULL) {
+        print_node(temp_n);
+        printf(",\n");
+        temp_n = temp_n->next_n;
+    }
+    printf("]\n");
+}

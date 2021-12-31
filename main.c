@@ -121,10 +121,40 @@ int test_nodes() {
     printf("is n0 free? %d", free_n(n0));
 }
 
+int test_graph() {
+    p_graph g= init_graph(4);
+    printf("init_graph:\n");
+    print_graph(g);
+    //ADD EDGE
+    add_edge(g,0,1,1);
+    printf("add_edge 0->1:\n");
+    print_graph(g);
+    add_edge(g,1,1,0);
+    printf("add_edge 1->0:\n");
+    print_graph(g);
+    add_edge(g,1,1,2);
+    printf("add_edge 1->2:\n");
+    print_graph(g);
+    add_edge(g,2,1,1);
+    printf("add_edge 2->1:\n");
+    print_graph(g);
+    add_edge(g,2,1,3);
+    printf("add_edge 2->3:\n");
+    print_graph(g);
+    add_edge(g,3,1,2);
+    printf("add_edge 3->2:\n");
+    print_graph(g);
+    //ADD NODE
+    printf("add_node: 4\n");
+    add_node(g,4,NULL);
+    print_graph(g);
+}
+
 int main() {
     printf("Hello, World!\n");
 //    test_edges();
-    test_nodes();
+//    test_nodes();
+    test_graph();
 
     return 0;
 }
