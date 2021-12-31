@@ -1,7 +1,6 @@
 #ifndef _GRAPH_H_
 #define _GRAPH_H_
 
-#include "edges.h"
 #include "nodes.h"
 
 typedef struct Graph {
