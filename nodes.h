@@ -3,7 +3,7 @@
 
 #include "edges.h"
 
-enum tag {
+enum Tag {
     WHITE, GREY, BLACK
 };
 
@@ -13,12 +13,16 @@ typedef struct Node {
     p_e_list out_edges;
     struct Node *prev_n;
     struct Node *next_n;
+    enum Tag tag;
 } node, *p_node;
 
 node *gen_node(int id_);
 
+int free_n_edges(node *n);
+
 int free_n(node *n);
 
+int print_node();
 /*
 typedef struct NodesList {
     node *n_arr;

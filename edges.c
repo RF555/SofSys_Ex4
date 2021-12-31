@@ -206,13 +206,9 @@ int pop_e(p_e_list pe_list, edge *e_) {
 }
 
 int free_edge_list(p_e_list pe_list) {
-//    p_edge curr_e = pe_list->e_root;
-//    while (curr_e != NULL) {
-//        p_edge temp_e = curr_e;
-//        curr_e = curr_e->next_e;
-//        free(temp_e);
-//        pe_list->size -= 1;
-//    }
+    if(pe_list==NULL){
+        return 0;
+    }
     while (pe_list->e_tail != NULL) {
         pop_e_root(pe_list);
     }
