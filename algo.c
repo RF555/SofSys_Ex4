@@ -23,11 +23,11 @@ int is_latter(char ch) {
     } else { return 1; }
 }
 
-int seq_size(char *input) {
-    int count = 1;
-    while (is_latter(input[count])) {
-        ++count;
+int seq_end(char *input) {
+    int end = 1;
+    while (is_latter(input[end])) {
+        ++end;
     }
-    return count;
+    return end;
 }
 

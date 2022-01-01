@@ -13,17 +13,17 @@
 
 char *get_input();
 
-int seq_size(char *input);
+int seq_end(char *input);
 
-void A(graph *g, char *input, int size);
+void A(graph *g, char *input, int end);
 
-void B(graph *g, char *input, int size);
+void B(graph *g, char *input, int end);
 
-void D(graph *g, char *input, int size);
+void D(graph *g, char *input, int end);
 
-float Shortest_path(graph *g, char *input, int size);
+float Shortest_path(graph *g, char *input, int end);
 
-void TSP(graph *g, char *input, int size);
+void TSP(graph *g, char *input, int end);
 
 
 #endif //ALGO_H
