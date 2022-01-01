@@ -32,18 +32,6 @@ p_node search_n(p_graph g, int id) {
             curr = curr->next_n;
         }
     }
-//    p_node curr_l = g->n_root;
-//    p_node curr_r = g->n_tail;
-//    while (curr_r->id != curr_l->id) {
-//        if (curr_l->id == id) {
-//            return curr_l;
-//        } else {
-//            curr_l = curr_l->next_n;
-//        }
-//        if (curr_r->id == id) {
-//            return curr_r;
-//        } else { curr_r = curr_r->prev_n; }
-//    }
     return NULL;
 }
 
