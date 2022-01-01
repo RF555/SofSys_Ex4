@@ -171,11 +171,11 @@ int test_graph() {
     print_graph(g);
     //REMOVE EDGE
     printf("remove edge 2->4:\n");
-    remove_edge(g,2,4);
+    remove_edge(g, 2, 4);
     print_graph(g);
     //REMOVE NODE
     printf("remove node 2:\n");
-    remove_node(g,2);
+    remove_node(g, 2);
     print_graph(g);
     //FREE GRAPH
     printf("free graph:\n");
@@ -183,11 +183,19 @@ int test_graph() {
     print_graph(g);
 }
 
+int test_algo() {
+    //INPUT
+    printf("%s",get_input());
+
+    return 0;
+}
+
 int main() {
     printf("Hello, World!\n");
 //    test_edges();
 //    test_nodes();
-    test_graph();
+//    test_graph();
+    test_algo();
 
     return 0;
 }
