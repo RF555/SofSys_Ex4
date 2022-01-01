@@ -6,15 +6,27 @@
 'edge_list --> edge
 'algo --> graph
 
+graph --> algo
+edge -> graph
+edge --> edge_list
+node -> graph
 
-class node{
-int id;
-edge_list in_edges;
-edge_list out_edges;
-node *prev_n;
-node *next_n;
-node *gen_node(int id_);
-int free_n(node *n);
+
+class graph{
+p_node n_root;
+p_node n_tail;
+int node_size;
+int edge_size;
+graph *init_graph(int n);
+int add_new_node(graph *g, int id);
+int add_node(graph *g, int id, edge_list *new_e_list);
+int update_in_edges(graph *g, edge_list *new_e_list);
+int remove_node(graph *g, int id);
+int add_edge(graph *g, int src, int w, int dest);
+int add_Edge(graph *g, edge *e);
+int remove_edge(graph *g, int src, int dest);
+int free_graph(graph *g);
+int print_graph(p_graph g);
 }
 
 class edge{
@@ -24,32 +36,29 @@ int dest;
 edge *prev_e;
 edge *next_e;
 edge *gen_edge(int src_, float w_, int dest_);
+int print_e(edge *e);
 }
 
-class graph{
-node_list nodes;
-edge_list edges;
-int node_size;
-int edge_size;
-int init_graph();
-'void add_node(graph *g, int id);
-'void remove_node(graph *g, int id);
-'void add_edge(graph *g, int src, float w, int dest);
-'void add_Edge(graph *g, edge e);
-'void remove_edge(graph *g, int src, int dest);
+class node{
+int id;
+edge_list in_edges;
+edge_list out_edges;
+node *prev_n;
+node *next_n;
+node *gen_node(int id_);
+int free_n_edges(node *n);
+int free_n(node *n);
+int print_node();
 }
 
-class ?node_list?{
-node *n_root;
-node *n_tail;
-int size;
-int init_node_list(node_list *n_list);
-int set_n_root(node *n);
-int set_n_tail(node *n);
-int add_node(node_list *n_list, int id_);
-int remove_node(node_list *n_list, int id_);
-int free_node_list(node_list *n_list);
+class algo{
+void A(graph *g, char *input);
+void B(graph *g, char *input);
+void D(graph *g, char *input);
+float Shortest_path(graph *g, char *input);
+void TSP(graph *g, char *input);
 }
+
 class edge_list{
 edge *e_root;
 edge *e_tail;
@@ -58,19 +67,26 @@ p_e_list init_edge_list();
 int set_e_root(p_e_list pe_list, edge *e);
 int set_e_tail(p_e_list pe_list, edge *e);
 p_edge search_e(p_e_list pe_list, edge *e);
-int push_edge(p_e_list pe_list, int src_, float w_, int dest_);
-void pop_e_root(p_e_list pe_list);
-void pop_e_tail(p_e_list pe_list);
-void pop_e(p_e_list pe_list, edge *e_);
+void push_edge(p_e_list pe_list, edge *e);
+void push_Edge(p_e_list pe_list, int src_, int w_, int dest_);
+int pop_e_root(p_e_list pe_list);
+int pop_e_tail(p_e_list pe_list);
+int pop_e(p_e_list pe_list, edge *e_);
 int free_edge_list(p_e_list pe_list);
+int print_e_list(edge_list *e_list);
 }
 
-class algo{
-int A(graph *g, string input);
-int B(graph *g, string input);
-int D(graph *g, string input);
-float Shortest_path(graph *g, string input);
-int TSP(graph *g, string input);
-}
+
+'class ?node_list?{
+'node *n_root;
+'node *n_tail;
+'int size;
+'int init_node_list(node_list *n_list);
+'int set_n_root(node *n);
+'int set_n_tail(node *n);
+'int add_node(node_list *n_list, int id_);
+'int remove_node(node_list *n_list, int id_);
+'int free_node_list(node_list *n_list);
+'}
 
 @enduml
