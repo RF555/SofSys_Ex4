@@ -169,7 +169,18 @@ int test_graph() {
     printf("add node 2 (with edges):\n");
     add_node(g, 2, el_2);
     print_graph(g);
-
+    //REMOVE EDGE
+    printf("remove edge 2->4:\n");
+    remove_edge(g,2,4);
+    print_graph(g);
+    //REMOVE NODE
+    printf("remove node 2:\n");
+    remove_node(g,2);
+    print_graph(g);
+    //FREE GRAPH
+    printf("free graph:\n");
+    free_graph(g);
+    print_graph(g);
 }
 
 int main() {

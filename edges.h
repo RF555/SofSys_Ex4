@@ -13,7 +13,7 @@ typedef struct Edge {
 } edge, *p_edge;
 
 edge *gen_edge(int src_, int w_, int dest_);
-//char *to_str(p_edge e);
+
 int print_e(edge *e);
 
 typedef struct EdgeList {

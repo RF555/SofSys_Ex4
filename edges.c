@@ -207,7 +207,7 @@ int pop_e(p_e_list pe_list, edge *e_) {
 }
 
 int free_edge_list(p_e_list pe_list) {
-    if (pe_list == NULL) {
+    if (pe_list == NULL || pe_list->e_root == NULL && pe_list->e_tail == NULL) {
         return 0;
     }
     while (pe_list->e_tail != NULL) {

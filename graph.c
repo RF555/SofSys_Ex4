@@ -186,6 +186,90 @@ int add_Edge(graph *g, edge *e) {
     }
 }
 
+int remove_edge(graph *g, int src, int dest) {
+    p_node src_n = search_n(g, src);
+    if (src_n == NULL) {
+        printf("ERROR remove_edge- SRC NODE DOESN'T EXISTS!\n");
+        free(src_n);
+        src_n = NULL;
+        return 0;
+    }
+    p_node dest_n = search_n(g, dest);
+    if (dest_n == NULL) {
+        printf("ERROR remove_edge- DEST NODE DOESN'T EXISTS!\n");
+        free(dest_n);
+        dest_n = NULL;
+        return 0;
+    }
+    p_edge e = gen_edge(src, 0, dest);
+    pop_e(src_n->out_edges, e);
+    pop_e(dest_n->in_edges, e);
+    g->edge_size -= 1;
+    free(e);
+    e = NULL;
+    return 1;
+}
+
+int remove_node(graph *g, int id) {
+    p_node n = search_n(g, id);
+    if (n == NULL) { //no node with that id
+        return 0;
+    }
+    p_edge in_curr = n->in_edges->e_root;
+    while (in_curr != NULL) {
+        p_edge temp = in_curr->next_e;
+        remove_edge(g, in_curr->src, in_curr->dest);
+        in_curr = temp;
+    }
+    p_edge out_curr = n->out_edges->e_root;
+    while (out_curr != NULL) {
+        p_edge temp = out_curr->next_e;
+        remove_edge(g, out_curr->src, out_curr->dest);
+        out_curr = temp;
+    }
+    if (n->id == g->n_root->id && n->id == g->n_tail->id) {
+        g->n_tail = NULL;
+        g->n_root = NULL;
+    } else if (n->id == g->n_root->id) {
+        p_node temp = n->next_n;
+        n->next_n = NULL;
+        temp->prev_n = NULL;
+        g->n_root = temp;
+    } else if (n->id == g->n_tail->id) {
+        p_node temp = n->prev_n;
+        n->prev_n = NULL;
+        temp->next_n = NULL;
+        g->n_tail = temp;
+    } else {
+        p_node temp_perv = n->prev_n;
+        p_node temp_next = n->next_n;
+        n->next_n = NULL;
+        n->prev_n = NULL;
+        temp_next->prev_n = temp_perv;
+        temp_perv->next_n = temp_next;
+    }
+    g->node_size -= 1;
+    free_n_edges(n);
+    free_n(n);
+    return 1;
+}
+
+int free_graph(graph *g) {
+    p_node curr_n = g->n_root;
+    while (curr_n != NULL) {
+        p_node temp = curr_n->next_n;
+        remove_node(g, curr_n->id);
+        curr_n = temp;
+    }
+    if (g->node_size == 0 && g->edge_size == 0 && g->n_root == NULL && g->n_tail == NULL) {
+        free(g);
+        return 1;
+    } else {
+        printf("ERROR free_graph!");
+        return 0;
+    }
+}
+
 
 int print_graph(p_graph g) {
     printf("[ node_size: %d, edge_size: %d,\n", g->node_size, g->edge_size);

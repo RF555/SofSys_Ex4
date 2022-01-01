@@ -26,6 +26,8 @@ int add_Edge(graph *g, edge *e);
 
 int remove_edge(graph *g, int src, int dest);
 
+int free_graph(graph *g);
+
 int print_graph(p_graph g);
 
 #endif //_GRAPH_H_
