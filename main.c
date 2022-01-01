@@ -122,32 +122,54 @@ int test_nodes() {
 }
 
 int test_graph() {
-    p_graph g= init_graph(4);
+    p_graph g = init_graph(4);
     printf("init_graph:\n");
     print_graph(g);
     //ADD EDGE
-    add_edge(g,0,1,1);
+    add_edge(g, 0, 1, 1);
     printf("add_edge 0->1:\n");
     print_graph(g);
-    add_edge(g,1,1,0);
+    add_edge(g, 1, 1, 0);
     printf("add_edge 1->0:\n");
     print_graph(g);
-    add_edge(g,1,1,2);
+    add_edge(g, 1, 1, 2);
     printf("add_edge 1->2:\n");
     print_graph(g);
-    add_edge(g,2,1,1);
+    add_edge(g, 2, 1, 1);
     printf("add_edge 2->1:\n");
     print_graph(g);
-    add_edge(g,2,1,3);
+    add_edge(g, 2, 1, 3);
     printf("add_edge 2->3:\n");
     print_graph(g);
-    add_edge(g,3,1,2);
+    add_edge(g, 3, 1, 2);
     printf("add_edge 3->2:\n");
     print_graph(g);
-    //ADD NODE
+    //ADD NODE - new node that didn't exist and NO edges
+/*
     printf("add_node: 4\n");
-    add_node(g,4,NULL);
+    add_node(g, 4, NULL);
     print_graph(g);
+*/
+    //ADD NODE - new node that didn't exist with edges
+    p_e_list el_4 = init_edge_list();
+    push_Edge(el_4, 4, 1, 3);
+    push_Edge(el_4, 4, 1, 0);
+    printf("add node 4 and edges 4->3 and 4->0:\n");
+    add_node(g, 4, el_4);
+    print_graph(g);
+    //ADD NODE - new node that already exists (no edges)
+    printf("add node 2 (no edges):\n");
+    add_node(g, 2, NULL);
+    print_graph(g);
+    //ADD NODE - new node that already exists (with edges)
+    p_e_list el_2 = init_edge_list();
+    push_Edge(el_2, 2, 1, 1);
+    push_Edge(el_2, 2, 1, 3);
+    push_Edge(el_2, 2, 1, 4);
+    printf("add node 2 (with edges):\n");
+    add_node(g, 2, el_2);
+    print_graph(g);
+
 }
 
 int main() {

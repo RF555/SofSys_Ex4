@@ -20,7 +20,7 @@ int update_in_edges(graph *g, edge_list *new_e_list);
 
 int remove_node(graph *g, int id);
 
-int add_edge(graph *g, int src, float w, int dest);
+int add_edge(graph *g, int src, int w, int dest);
 
 int add_Edge(graph *g, edge *e);
 
