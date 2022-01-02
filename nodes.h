@@ -14,6 +14,7 @@ typedef struct Node {
     struct Node *prev_n;
     struct Node *next_n;
     enum Tag tag;
+    int curr_w;
 } node, *p_node;
 
 node *gen_node(int id_);

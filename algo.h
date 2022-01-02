@@ -2,6 +2,7 @@
 #define ALGO_H
 
 #include "graph.h"
+#include "limits.h"
 
 #define INIT_LEN 10
 #define ADD_LEN 2

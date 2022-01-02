@@ -231,10 +231,6 @@ int main_test() {
 
 ///*
 int main() {
-//    main_test();
-//    typedef enum Command {
-//        AAA, BBB, DDD, SSS, TTT
-//    } cmd;
     char *input = get_input();
     char *curr_seq = input;
     int curr_seq_size = 0;
@@ -257,7 +253,7 @@ int main() {
                 curr_seq = curr_seq + curr_seq_size;
 
                 break;
-            case 's':
+            case 'S':
                 Shortest_path(g, curr_seq, curr_seq_size);
                 curr_seq = curr_seq + curr_seq_size;
 
@@ -268,6 +264,7 @@ int main() {
 
                 break;
         }
+
     }
     free(input);
     print_graph(g);
