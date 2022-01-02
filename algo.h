@@ -18,6 +18,8 @@
 #define d_ASCII 100
 #define s_ASCII 115
 #define t_ASCII 116
+#define CMD 1
+#define START 2
 
 char *get_input();
 

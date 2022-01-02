@@ -98,19 +98,10 @@ p_edge search_e(p_e_list pe_list, edge *e) {
         printf("ERROR- edge is NULL!\n");
         return 0;
     }
-    p_edge curr_l = pe_list->e_root;
-    p_edge curr_r = pe_list->e_tail;
-    while (curr_l != NULL && curr_r != NULL && !compare_e(curr_l, curr_r)) {
-        if (compare_pos(e, curr_l)) {
-            return curr_l;
-        } else {
-            curr_l = curr_l->next_e;
-        }
-        if (compare_pos(e, curr_r)) {
-            return curr_r;
-        } else {
-            curr_r = curr_r->prev_e;
-        }
+    p_edge curr_e = pe_list->e_root;
+    while (curr_e != NULL) {
+        if (compare_pos(curr_e, e)) { return curr_e; }
+        else { curr_e = curr_e->next_e; }
     }
     return NULL;
 }

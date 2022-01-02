@@ -205,20 +205,33 @@ int test_algo() {
     B(g, input, B_seq_size);
     print_graph(g);
     free(input);
+    input = get_input();
+    B_seq_size = seq_end(input);
+    B(g, input, B_seq_size);
+    print_graph(g);
+    free(input);
+    //D
+    input = get_input();
+    int D_seq_size = seq_end(input);
+    D(g, input, D_seq_size);
+    print_graph(g);
+    free(input);
+
     return 0;
 }
 
-int main() {
-//int main_test() {
+//int main() {
+int main_test() {
     printf("Hello, World!\n");
 //    test_edges();
 //    test_nodes();
 //    test_graph();
     test_algo();
 }
-/*
+
+///*
 int main() {
-    main_test();
+//    main_test();
 //    typedef enum Command {
 //        AAA, BBB, DDD, SSS, TTT
 //    } cmd;
@@ -227,9 +240,9 @@ int main() {
     int curr_seq_size = 0;
     size_t full_size = strlen(input);
     p_graph g = init_graph(0);
-    while (input[0] != END_OF_INPUT && curr_seq[0] != input[full_size]) {
+    while (curr_seq[0] != END_OF_INPUT1 && curr_seq[0] != END_OF_INPUT2 && curr_seq[0] != input[full_size]) {
         curr_seq_size = seq_end(curr_seq);
-        switch (input[0]) {
+        switch (curr_seq[0]) {
             case 'A':
                 A(g, curr_seq, curr_seq_size);
                 curr_seq = curr_seq + curr_seq_size;
@@ -257,6 +270,7 @@ int main() {
         }
     }
     free(input);
+    print_graph(g);
     return 0;
 }
- */
+// */

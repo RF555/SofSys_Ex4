@@ -25,7 +25,7 @@ int is_cmd(char ch) {
 }
 
 int seq_end(char *input) {
-    int end = 1;
+    int end = CMD;
     while (!is_cmd(input[end]) && input[end] != END_OF_INPUT1 && input[end] != END_OF_INPUT2) {
         ++end;
     }
@@ -34,7 +34,7 @@ int seq_end(char *input) {
 
 int A(graph *g, char *input, int end) {
     free_graph(g);
-    int curr_ch = 2;
+    int curr_ch = START;
     char *ptr;
     int init_n = (int) strtol(input + curr_ch, &ptr, 10);
     int diff = (int) (ptr - (input + curr_ch));
@@ -69,7 +69,7 @@ int A(graph *g, char *input, int end) {
 }
 
 int B(graph *g, char *input, int end) {
-    int curr_ch = 2;
+    int curr_ch = START;
     char *ptr;
     int new_id = (int) strtol(input + curr_ch, &ptr, 10);
     int diff = (int) (ptr - (input + curr_ch));
@@ -95,10 +95,26 @@ int B(graph *g, char *input, int end) {
     return 0;
 }
 
+int D(graph *g, char *input, int end){
+    int curr_ch = START;
+    char *ptr;
+    int delete_id = (int) strtol(input + curr_ch, &ptr, 10);
+//    int diff = (int) (ptr - (input + curr_ch));
+//    curr_ch += diff;
+    remove_node(g,delete_id);
+    return 0;
+}
 
 
 
 
+int Shortest_path(graph *g, char *input, int end){
+    return 0;
+}
+
+int TSP(graph *g, char *input, int end){
+    return 0;
+}
 
 
 
