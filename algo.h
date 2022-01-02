@@ -5,7 +5,8 @@
 
 #define INIT_LEN 10
 #define ADD_LEN 2
-#define END_OF_INPUT '\n'
+#define END_OF_INPUT1 '\n'
+#define END_OF_INPUT2 '\0'
 #define PARSE_CH '0'
 #define A_ASCII 65
 #define B_ASCII 66

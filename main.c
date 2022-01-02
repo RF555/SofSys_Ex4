@@ -197,7 +197,14 @@ int test_algo() {
 //    printf("%s",ptr);
     p_graph g = init_graph(0);
     A(g, input, seq_size);
+    free(input);
     print_graph(g);
+    //B
+    input = get_input();
+    int B_seq_size = seq_end(input);
+    B(g, input, B_seq_size);
+    print_graph(g);
+    free(input);
     return 0;
 }
 

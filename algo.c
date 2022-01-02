@@ -6,14 +6,14 @@ char *get_input() {
     int count = 0;
     char ch;
     scanf("%c", &ch);
-    while (ch != END_OF_INPUT) {
+    while (ch != END_OF_INPUT1) {
         if (count + ADD_LEN >= len) {
             input = realloc(input, (len += INIT_LEN) * sizeof(char));
         }
         input[count++] = ch;
         scanf("%c", &ch);
     }
-    input[count] = '\0';
+    input[count] = END_OF_INPUT2;
     return input;
 }
 
@@ -26,7 +26,7 @@ int is_cmd(char ch) {
 
 int seq_end(char *input) {
     int end = 1;
-    while (!is_cmd(input[end]) && input[end] != END_OF_INPUT) {
+    while (!is_cmd(input[end]) && input[end] != END_OF_INPUT1 && input[end] != END_OF_INPUT2) {
         ++end;
     }
     return end;
@@ -35,10 +35,10 @@ int seq_end(char *input) {
 int A(graph *g, char *input, int end) {
     free_graph(g);
     int curr_ch = 2;
-    char *ptr1;
-    int init_n = (int) strtol(input+curr_ch, &ptr1, 10);
-    int diff1 = (int) (ptr1 - (input+curr_ch));
-    curr_ch += diff1;
+    char *ptr;
+    int init_n = (int) strtol(input + curr_ch, &ptr, 10);
+    int diff = (int) (ptr - (input + curr_ch));
+    curr_ch += diff;
     g = init_graph(init_n);
     ++curr_ch;
     p_node curr_n;
@@ -47,28 +47,62 @@ int A(graph *g, char *input, int end) {
             break;
         } else if (input[curr_ch] == 'n') {
             ++curr_ch;
-            char *ptr;
-            int src_id = (int) strtol(input+curr_ch, &ptr, 10);
-            int diff = (int) (ptr - (input+curr_ch));
+            int src_id = (int) strtol(input + curr_ch, &ptr, 10);
+            diff = (int) (ptr - (input + curr_ch));
             curr_ch += diff;
             curr_n = search_n(g, src_id);
             ++curr_ch;
         } else if (input[curr_ch] == ' ') {
             ++curr_ch;
         } else {
-            char *ptr;
-            int dest_id = (int) strtol(input+curr_ch, &ptr, 10);
-            int diff = (int) (ptr - (input+curr_ch));
+            int dest_id = (int) strtol(input + curr_ch, &ptr, 10);
+            diff = (int) (ptr - (input + curr_ch));
             curr_ch += diff;
-            int w = (int) strtol(input+curr_ch, &ptr, 10);
-            int diff2 = (int) (ptr - (input+curr_ch));
-            curr_ch += diff2;
+            int w = (int) strtol(input + curr_ch, &ptr, 10);
+            diff = (int) (ptr - (input + curr_ch));
+            curr_ch += diff;
             add_edge(g, curr_n->id, w, dest_id);
             ++curr_ch;
         }
     }
     return 0;
 }
+
+int B(graph *g, char *input, int end) {
+    int curr_ch = 2;
+    char *ptr;
+    int new_id = (int) strtol(input + curr_ch, &ptr, 10);
+    int diff = (int) (ptr - (input + curr_ch));
+    curr_ch += diff;
+    p_e_list new_e_list = init_edge_list();
+    while (curr_ch < end) {
+        if (curr_ch == end) {
+            break;
+        } else if (input[curr_ch] == ' ') {
+            ++curr_ch;
+        } else {
+            int dest_id = (int) strtol(input + curr_ch, &ptr, 10);
+            diff = (int) (ptr - (input + curr_ch));
+            curr_ch += diff;
+            int w = (int) strtol(input + curr_ch, &ptr, 10);
+            diff = (int) (ptr - (input + curr_ch));
+            curr_ch += diff;
+            push_Edge(new_e_list, new_id, w, dest_id);
+            ++curr_ch;
+        }
+    }
+    add_node(g, new_id, new_e_list);
+    return 0;
+}
+
+
+
+
+
+
+
+
+
 
 
 
