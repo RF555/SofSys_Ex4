@@ -1,4 +1,4 @@
-//#include <stdio.h>
+#include <string.h>
 #include "algo.h"
 
 int test_edges() {
@@ -185,17 +185,71 @@ int test_graph() {
 
 int test_algo() {
     //INPUT
-    printf("%s",get_input());
-
+    char *input = get_input();
+    printf("%s\n", input);
+    printf("%lu\n", strlen(input));
+    //SEQUENCE END
+    int seq_size = seq_end(input);
+    printf("seq_size=%d\n", seq_size);
+    //A
+    char *ptr;
+//    printf("%ld\n", strtol(input,&ptr,10));
+//    printf("%s",ptr);
+    p_graph g = init_graph(0);
+    A(g, input, seq_size);
+    print_graph(g);
     return 0;
 }
 
 int main() {
+//int main_test() {
     printf("Hello, World!\n");
 //    test_edges();
 //    test_nodes();
 //    test_graph();
     test_algo();
+}
+/*
+int main() {
+    main_test();
+//    typedef enum Command {
+//        AAA, BBB, DDD, SSS, TTT
+//    } cmd;
+    char *input = get_input();
+    char *curr_seq = input;
+    int curr_seq_size = 0;
+    size_t full_size = strlen(input);
+    p_graph g = init_graph(0);
+    while (input[0] != END_OF_INPUT && curr_seq[0] != input[full_size]) {
+        curr_seq_size = seq_end(curr_seq);
+        switch (input[0]) {
+            case 'A':
+                A(g, curr_seq, curr_seq_size);
+                curr_seq = curr_seq + curr_seq_size;
+                break;
+            case 'B':
+                B(g, curr_seq, curr_seq_size);
+                curr_seq = curr_seq + curr_seq_size;
 
+                break;
+            case 'D':
+                D(g, curr_seq, curr_seq_size);
+                curr_seq = curr_seq + curr_seq_size;
+
+                break;
+            case 's':
+                Shortest_path(g, curr_seq, curr_seq_size);
+                curr_seq = curr_seq + curr_seq_size;
+
+                break;
+            case 'T':
+                TSP(g, curr_seq, curr_seq_size);
+                curr_seq = curr_seq + curr_seq_size;
+
+                break;
+        }
+    }
+    free(input);
     return 0;
 }
+ */

@@ -6,24 +6,31 @@
 #define INIT_LEN 10
 #define ADD_LEN 2
 #define END_OF_INPUT '\n'
+#define PARSE_CH '0'
 #define A_ASCII 65
-#define Z_ASCII 90
+#define B_ASCII 66
+#define D_ASCII 68
+#define S_ASCII 83
+#define T_ASCII 84
 #define a_ASCII 97
-#define z_ASCII 122
+#define b_ASCII 98
+#define d_ASCII 100
+#define s_ASCII 115
+#define t_ASCII 116
 
 char *get_input();
 
 int seq_end(char *input);
 
-void A(graph *g, char *input, int end);
+int A(graph *g, char *input, int end);
 
-void B(graph *g, char *input, int end);
+int B(graph *g, char *input, int end);
 
-void D(graph *g, char *input, int end);
+int D(graph *g, char *input, int end);
 
-float Shortest_path(graph *g, char *input, int end);
+int Shortest_path(graph *g, char *input, int end);
 
-void TSP(graph *g, char *input, int end);
+int TSP(graph *g, char *input, int end);
 
 
 #endif //ALGO_H
