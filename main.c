@@ -183,6 +183,7 @@ int test_graph() {
     printf("free graph:\n");
     free_graph(g);
     print_graph(g);
+    return 0;
 }
 
 int test_algo() {

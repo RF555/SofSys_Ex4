@@ -22,6 +22,27 @@
 #define CMD 1
 #define START 2
 
+
+typedef struct PQ_N {
+    p_node node_ptr;
+    struct PQ_N *next;
+    enum Tag visited;
+} n_pq, *pq_p;
+
+typedef struct PQ_ {
+    int size;
+    n_pq *root;
+
+} PQ, *p_PQ;
+PQ *gen_PQ();
+n_pq *gen_pq_(node *n);
+node *peeq(PQ *pq);
+int peeq_w_from_src(n_pq *npq);
+int pop(PQ *pq);
+int push(PQ *pq, p_node n);
+int is_empty(PQ *pq);
+int free_pq(PQ *pq);
+
 char *get_input();
 
 int seq_end(char *input);

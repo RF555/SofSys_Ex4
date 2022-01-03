@@ -105,18 +105,6 @@ int D(graph *g, char *input, int end) {
     return 0;
 }
 
-p_edge search_e_by_dest(p_e_list out_list, int dest) {
-    p_edge curr_e = out_list->e_root;
-    while (curr_e != NULL) {
-        if (curr_e->dest == dest) {
-            return curr_e;
-        } else {
-            curr_e = curr_e->next_e;
-        }
-    }
-    return NULL;
-}
-
 int dijkstra(p_graph g, p_node src_n) {
     int src_id = src_n->id;
     p_node curr_n = g->n_root;
@@ -129,27 +117,28 @@ int dijkstra(p_graph g, p_node src_n) {
         curr_n->tag = WHITE;
         curr_n = curr_n->next_n;
     }
-    p_e_list q = init_edge_list();
-    push_Edge(q, src_id, -1, -1);
-    while (q->e_root != NULL) {
-        int curr_id = q->e_root->src;
-        curr_n = search_n(g, curr_id);
-        pop_e_root(q);
+    p_PQ pq = gen_PQ();
+    push(pq, src_n);
+    while (!is_empty(pq)) {
+        curr_n = peeq(pq);
+//        int curr_src_id = curr_n->id;
+        int curr_src_w = curr_n->curr_w;
+        pop(pq);
         if (curr_n->tag == WHITE) {
             curr_n->tag = BLACK;
             p_edge curr_out_e = curr_n->out_edges->e_root;
             while (curr_out_e != NULL) {
+                int curr_e_w = curr_out_e->w;
                 p_node curr_dest = search_n(g, curr_out_e->dest);
+//                int curr_dest_id = curr_dest->id;
+//                int curr_dest_w = curr_dest->curr_w;
                 if (curr_dest->tag == WHITE) {
-                    p_edge temp_e = search_e_by_dest(curr_n->out_edges, curr_dest->id);
-                    if (temp_e == NULL) {
-                        printf("ERROR dijkstra- no such edge\n");
-                        return 0;
-                    } else if (curr_dest->curr_w > (src_n->curr_w + temp_e->w)) {
-                        curr_dest->curr_w = (src_n->curr_w + temp_e->w);
-                        p_edge e_ = curr_dest->out_edges->e_root;
+                    if (curr_dest->curr_w > (curr_src_w + curr_e_w)) {
+                        curr_dest->curr_w = (curr_src_w + curr_e_w);
+                        p_edge e_ = curr_n->out_edges->e_root;
                         while (e_ != NULL) {
-                            push_Edge(q, curr_dest->id, -1, -1);
+                            p_node temp_n = search_n(g, e_->dest);
+                            push(pq, temp_n);
                             e_ = e_->next_e;
                         }
                     }
@@ -158,7 +147,7 @@ int dijkstra(p_graph g, p_node src_n) {
             }
         }
     }
-    free_edge_list(q);
+    free_pq(pq);
     return 1;
 }
 
@@ -196,6 +185,84 @@ int TSP(graph *g, char *input, int end) {
     return 0;
 }
 
+
+// PQ implementation:
+
+PQ *gen_PQ() {
+    p_PQ new_PQ = (PQ *) malloc(sizeof(PQ));
+    new_PQ->size = 0;
+    new_PQ->root = NULL;
+    return new_PQ;
+}
+
+n_pq *gen_pq_(node *n) {
+    pq_p new_pq = (n_pq *) malloc(sizeof(n_pq));
+    new_pq->node_ptr = n;
+    new_pq->next = NULL;
+    new_pq->visited=WHITE;
+    return new_pq;
+}
+
+node *peeq(PQ *pq) {
+    return pq->root->node_ptr;
+}
+
+
+int peeq_w_from_src(n_pq *npq) {
+    return npq->node_ptr->curr_w;
+}
+
+
+int pop(PQ *pq) {
+    if (!is_empty(pq)) {
+        pq_p temp = pq->root;
+        pq->root = temp->next;
+        pq->size -= 1;
+        if (pq->size == 0) {
+            free(pq->root);
+            pq->root = NULL;
+        }
+        free(temp);
+        temp = NULL;
+    }
+    return 0;
+}
+
+int push(PQ *pq, p_node n) {
+    pq_p new_pq = gen_pq_(n);
+    if (is_empty(pq)) {
+        pq->root = new_pq;
+        pq->size = 1;
+    } else if (peeq_w_from_src(pq->root) >= n->curr_w) {
+        new_pq->next = pq->root;
+        pq->root = new_pq;
+        pq->size += 1;
+    } else {
+        pq_p temp_pq = pq->root;
+        while (temp_pq->next != NULL && peeq_w_from_src(temp_pq->next) < n->curr_w) {
+            temp_pq = temp_pq->next;
+        }
+        new_pq->next = temp_pq->next;
+        temp_pq->next = new_pq;
+        pq->size += 1;
+    }
+    return 0;
+}
+
+int is_empty(PQ *pq) {
+    return (pq->size <= 0 && pq->root == NULL);
+}
+
+int free_pq(PQ *pq) {
+    if (is_empty(pq)) {
+        free(pq);
+        pq = NULL;
+        return 1;
+    } else {
+        printf("ERROR free_pq- pq is not empty!\n");
+        return 0;
+    }
+}
 
 
 

@@ -77,7 +77,20 @@ int free_edge_list(p_e_list pe_list);
 int print_e_list(edge_list *e_list);
 }
 
-
+class PQ_{
+p_node node_ptr;
+pq *next;
+pq *root;
+pq *tail;
+pq *gen(p_node n);
+p_node peeq_n(pq **root);
+p_node peeq_n_tail(pq **root);
+int peeq_root_from_src(pq **root);
+int peeq_tail_from_src(pq **root);
+int pop(pq **root);
+int push(pq **root, p_node n);
+int is_empty(pq **root);
+}
 'class ?node_list?{
 'node *n_root;
 'node *n_tail;
