@@ -87,7 +87,7 @@ int test_edges() {
     print_e_list(pe);
     return 0;
 */
-return 0;
+    return 0;
 }
 
 int test_nodes() {
@@ -183,7 +183,6 @@ int test_graph() {
     printf("free graph:\n");
     free_graph(g);
     print_graph(g);
-    return 0;
 }
 
 int test_algo() {
