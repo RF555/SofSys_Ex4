@@ -112,7 +112,7 @@ int dijkstra(p_graph g, p_node src_n) {
         if (curr_n->id == src_id) {
             curr_n->curr_w = 0;
         } else {
-            curr_n->curr_w = INT_MAX;
+            curr_n->curr_w = MAX;
         }
         curr_n->tag = WHITE;
         curr_n = curr_n->next_n;
@@ -134,7 +134,11 @@ int dijkstra(p_graph g, p_node src_n) {
 //                int curr_dest_w = curr_dest->curr_w;
                 if (curr_dest->tag == WHITE) {
                     if (curr_dest->curr_w > (curr_src_w + curr_e_w)) {
-                        curr_dest->curr_w = (curr_src_w + curr_e_w);
+                        if (curr_src_w == MAX || curr_e_w == MAX) {
+                            curr_dest->curr_w = MAX;
+                        } else {
+                            curr_dest->curr_w = (curr_src_w + curr_e_w);
+                        }
                         p_edge e_ = curr_n->out_edges->e_root;
                         while (e_ != NULL) {
                             p_node temp_n = search_n(g, e_->dest);
@@ -150,7 +154,6 @@ int dijkstra(p_graph g, p_node src_n) {
     free_pq(pq);
     return 1;
 }
-
 
 int Shortest_path(graph *g, char *input, int end) {
     int curr_ch = START;
@@ -170,7 +173,7 @@ int Shortest_path(graph *g, char *input, int end) {
     } else {
         dijkstra(g, src);
         path = dest->curr_w;
-        if (path == INT_MAX || path < 0) {
+        if (path == MAX || path < 0) {
             printf("Dijsktra shortest path: %d\n", -1);
             return -1;
         } else {
@@ -180,9 +183,121 @@ int Shortest_path(graph *g, char *input, int end) {
     }
 }
 
+int shortest_path(graph *g, p_node src, p_node dest) {
+    dijkstra(g, src);
+    return dest->curr_w;
+}
 
-int TSP(graph *g, char *input, int end) {
-    return 0;
+//Cities *init_cities() {
+//    p_cities cities = (Cities *) malloc(sizeof(Cities));
+//    if (cities == NULL) {
+//        printf("MEMORY ALLOCATION ERROR\n");
+//        return NULL;
+//    }
+//    cities->A_n=NULL;
+//    cities->B_n=NULL;
+//    cities->C_n=NULL;
+//    cities->D_n=NULL;
+//    cities->E_n=NULL;
+//    cities->F_n=NULL;
+//    cities->G_n=NULL;
+//    cities->curr_size=AA;
+//}
+//
+//int add_city(Cities *c, p_node n){
+//    switch (c->curr_size) {
+//        case AA:
+//            c->A_n=n;
+//            c->A_visited=WHITE;
+//            c->curr_size+=1;
+//        case BB:
+//            c->B_n=n;
+//            c->curr_size+=1;
+//        case CC:
+//            c->C_n=n;
+//            c->curr_size+=1;
+//        case DD:
+//            c->D_n=n;
+//            c->curr_size+=1;
+//        case EE:
+//            c->E_n=n;
+//            c->curr_size+=1;
+//        case FF:
+//            c->F_n=n;
+//            c->curr_size+=1;
+//        case GG:
+//            c->G_n=n;
+//            c->curr_size+=1;
+//    }
+//}
+
+
+
+int tsp(p_graph g, p_PQ cities) {
+    int min_dist = MAX;
+    p_PQ copy_ = copy(cities);
+    pq_p curr_start = cities->root;
+    while (curr_start != NULL) {
+        pq_p init = cities->root;
+        while (init != NULL) {
+            init->node_ptr->city_visit = GREY;
+            init = init->next;
+        }
+        p_PQ pq = gen_PQ();
+        pq_p curr_end = copy_->root;
+        while (curr_end != NULL) {
+            if (curr_start->node_ptr->id != curr_end->node_ptr->id) {
+                push_dijkstra(pq, g, curr_end->node_ptr, curr_start->node_ptr);
+            }
+            curr_end = curr_end->next;
+        }
+        int sum = 0;
+        p_node temp_curr = curr_start->node_ptr;
+        while (!is_empty(pq)) {
+            dijkstra(g, temp_curr);
+            sum += peeq_w_from_src(pq->root);
+            pop(pq);
+        }
+        if (sum < min_dist) {
+            min_dist = sum;
+        }
+        curr_start = curr_start->next;
+    }
+    return min_dist;
+}
+
+
+int TT(graph *g, char *input, int end) {
+    int curr_ch = START;
+    char *ptr;
+    int k = (int) strtol(input + curr_ch, &ptr, 10);
+    int diff = (int) (ptr - (input + curr_ch));
+    curr_ch += diff;
+    p_PQ cities = gen_PQ();
+    while (curr_ch < end) {
+        if (curr_ch == end) {
+            break;
+        } else if (input[curr_ch] == ' ') {
+            ++curr_ch;
+        } else {
+            int curr_id = (int) strtol(input + curr_ch, &ptr, 10);
+            diff = (int) (ptr - (input + curr_ch));
+            curr_ch += diff;
+            p_node curr_n = search_n(g, curr_id);
+            if (curr_n != NULL) {
+                curr_n->city = GREY;
+                push(cities, curr_n);
+            }
+            ++curr_ch;
+        }
+    }
+    int dist = tsp(g, cities);
+    if (dist >= MAX) {
+        printf("TSP shortest path: %d\n", -1);
+    } else {
+        printf("TSP shortest path: %d\n", dist);
+    }
+    return dist;
 }
 
 
@@ -199,7 +314,6 @@ n_pq *gen_pq_(node *n) {
     pq_p new_pq = (n_pq *) malloc(sizeof(n_pq));
     new_pq->node_ptr = n;
     new_pq->next = NULL;
-    new_pq->visited=WHITE;
     return new_pq;
 }
 
@@ -249,8 +363,44 @@ int push(PQ *pq, p_node n) {
     return 0;
 }
 
+int push_dijkstra(PQ *pq, p_graph g, p_node new_n, p_node src_n) {
+//    dijkstra(g, src_n);
+    pq_p new_pq = gen_pq_(new_n);
+    if (is_empty(pq)) {
+        pq->root = new_pq;
+        pq->size = 1;
+    } else {
+//        if (peeq_w_from_src(pq->root) >= new_n->curr_w) {
+        if (shortest_path(g, src_n, pq->root->node_ptr) >= shortest_path(g, src_n, new_n)) {
+            new_pq->next = pq->root;
+            pq->root = new_pq;
+            pq->size += 1;
+        } else {
+            pq_p temp_pq = pq->root;
+            while (temp_pq->next != NULL && peeq_w_from_src(temp_pq->next) < new_n->curr_w) {
+                temp_pq = temp_pq->next;
+            }
+            new_pq->next = temp_pq->next;
+            temp_pq->next = new_pq;
+            pq->size += 1;
+        }
+    }
+    return 0;
+}
+
+
 int is_empty(PQ *pq) {
     return (pq->size <= 0 && pq->root == NULL);
+}
+
+PQ *copy(p_PQ pq) {
+    p_PQ copy = gen_PQ();
+    pq_p curr = pq->root;
+    while (curr != NULL) {
+        push(copy, curr->node_ptr);
+        curr = curr->next;
+    }
+    return copy;
 }
 
 int free_pq(PQ *pq) {

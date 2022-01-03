@@ -21,12 +21,35 @@
 #define t_ASCII 116
 #define CMD 1
 #define START 2
+#define MAX 2*((INT_MAX)/3)
+//typedef enum TAKEN{AA,BB,CC,DD,EE,FF,GG}taken;
+//
+//typedef struct CITIES{
+//    p_node A_n;
+//    Tag A_visited;
+//    p_node B_n;
+//    Tag B_visited;
+//    p_node C_n;
+//    Tag C_visited;
+//    p_node D_n;
+//    Tag D_visited;
+//    p_node E_n;
+//    Tag E_visited;
+//    p_node F_n;
+//    Tag F_visited;
+//    p_node G_n;
+//    Tag G_visited;
+//    taken curr_size;
+//}Cities, *p_cities;
+//
+//Cities *init_cities();
+//int add_city(Cities *c,p_node n);
+
 
 
 typedef struct PQ_N {
     p_node node_ptr;
     struct PQ_N *next;
-    enum Tag visited;
 } n_pq, *pq_p;
 
 typedef struct PQ_ {
@@ -40,7 +63,10 @@ node *peeq(PQ *pq);
 int peeq_w_from_src(n_pq *npq);
 int pop(PQ *pq);
 int push(PQ *pq, p_node n);
+int push_dijkstra(PQ *pq,p_graph g, p_node new_n, p_node src_n);
 int is_empty(PQ *pq);
+PQ *copy(p_PQ pq);
+//int update(p_PQ pq);
 int free_pq(PQ *pq);
 
 char *get_input();
@@ -55,7 +81,7 @@ int D(graph *g, char *input, int end);
 
 int Shortest_path(graph *g, char *input, int end);
 
-int TSP(graph *g, char *input, int end);
+int TT(graph *g, char *input, int end);
 
 
 #endif //ALGO_H

@@ -263,7 +263,7 @@ int main() {
 
                 break;
             case 'T':
-                TSP(g, curr_seq, curr_seq_size);
+                TT(g, curr_seq, curr_seq_size);
                 curr_seq = curr_seq + curr_seq_size;
 
                 break;

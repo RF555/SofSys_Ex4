@@ -46,6 +46,7 @@ edge_list in_edges;
 edge_list out_edges;
 node *prev_n;
 node *next_n;
+Tag city;
 node *gen_node(int id_);
 int free_n_edges(node *n);
 int free_n(node *n);
