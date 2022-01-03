@@ -153,6 +153,7 @@ int update_in_edges(graph *g, edge_list *new_e_list) {
         return 0;
     }
 */
+    return 0;
 }
 
 int add_edge(graph *g, int src, int w, int dest) {
@@ -288,4 +289,5 @@ int print_graph(p_graph g) {
         temp_n = temp_n->next_n;
     }
     printf("]\n");
+    return 0;
 }

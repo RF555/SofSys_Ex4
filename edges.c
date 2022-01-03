@@ -39,9 +39,9 @@ int print_e(edge *e) {
     if (e == NULL) {
         printf("ERROR can't print- edge is NULL!\n");
     } else {
-        printf("{ src: %d, w: %f, dest: %d }", e->src, e->w, e->dest);
-        return 0;
+        printf("{ src: %d, w: %d, dest: %d }", e->src, e->w, e->dest);
     }
+    return 0;
 }
 
 
@@ -58,7 +58,7 @@ p_e_list init_edge_list() {
 }
 
 int set_e_root(p_e_list pe_list, edge *e) {
-    if (e == NULL && pe_list->size > 0 || e->prev_e != NULL || e->next_e != NULL) {
+    if ((e == NULL && pe_list->size > 0) || e->prev_e != NULL || e->next_e != NULL) {
         printf("ERROR set_e_root- edge has siblings OR is empty and list is not!\n");
         return 0;
     } else {
@@ -81,7 +81,7 @@ int set_e_root(p_e_list pe_list, edge *e) {
 }
 
 int set_e_tail(p_e_list pe_list, edge *e) {
-    if (e == NULL && pe_list->size > 0 || e->prev_e != NULL || e->next_e != NULL) {
+    if ((e == NULL && pe_list->size > 0) || e->prev_e != NULL || e->next_e != NULL) {
         printf("ERROR set_e_tail- edge has siblings OR is empty and list is not!\n");
         return 0;
     }
@@ -198,7 +198,7 @@ int pop_e(p_e_list pe_list, edge *e_) {
 }
 
 int free_edge_list(p_e_list pe_list) {
-    if (pe_list == NULL || pe_list->e_root == NULL && pe_list->e_tail == NULL) {
+    if (pe_list == NULL || (pe_list->e_root == NULL && pe_list->e_tail == NULL)) {
         return 0;
     }
     while (pe_list->e_tail != NULL) {

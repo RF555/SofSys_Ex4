@@ -87,6 +87,7 @@ int test_edges() {
     print_e_list(pe);
     return 0;
 */
+return 0;
 }
 
 int test_nodes() {
@@ -119,6 +120,7 @@ int test_nodes() {
     printf("\n");
     //FREE NODE
     printf("is n0 free? %d", free_n(n0));
+    return 0;
 }
 
 int test_graph() {
@@ -181,13 +183,14 @@ int test_graph() {
     printf("free graph:\n");
     free_graph(g);
     print_graph(g);
+    return 0;
 }
 
 int test_algo() {
     //INPUT
     char *input = get_input();
     printf("%s\n", input);
-    printf("%lu\n", strlen(input));
+//    printf("%lu\n", strlen(input));
     //SEQUENCE END
     int seq_size = seq_end(input);
     printf("seq_size=%d\n", seq_size);
@@ -227,6 +230,7 @@ int main_test() {
 //    test_nodes();
 //    test_graph();
     test_algo();
+    return 0;
 }
 
 ///*
