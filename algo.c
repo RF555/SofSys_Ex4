@@ -238,6 +238,7 @@ int tsp(p_graph g, p_PQ cities) {
     p_PQ copy_ = copy(cities);
     pq_p curr_start = cities->root;
     while (curr_start != NULL) {
+        int start_id=curr_start->node_ptr->id;
         pq_p init = cities->root;
         while (init != NULL) {
             init->node_ptr->city_visit = GREY;
@@ -245,6 +246,7 @@ int tsp(p_graph g, p_PQ cities) {
         }
         p_PQ pq = gen_PQ();
         pq_p curr_end = copy_->root;
+        int end_id=curr_end->node_ptr->id;
         while (curr_end != NULL) {
             if (curr_start->node_ptr->id != curr_end->node_ptr->id) {
                 push_dijkstra(pq, g, curr_end->node_ptr, curr_start->node_ptr);
@@ -253,9 +255,15 @@ int tsp(p_graph g, p_PQ cities) {
         }
         int sum = 0;
         p_node temp_curr = curr_start->node_ptr;
+        int temp_id=temp_curr->id;
         while (!is_empty(pq)) {
+            int pq_root_id= peeq(pq)->id;
             dijkstra(g, temp_curr);
-            sum += peeq_w_from_src(pq->root);
+            if (sum < MAX || peeq_w_from_src(pq->root) < MAX) {
+                sum += peeq_w_from_src(pq->root);
+            }else{
+                sum=MAX;
+            }
             pop(pq);
         }
         if (sum < min_dist) {
