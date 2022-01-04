@@ -2,6 +2,10 @@
 
 char *get_input() {
     char *input = (char *) malloc(INIT_LEN * sizeof(char));
+    if (input == NULL) {
+        printf("MEMORY ALLOCATION ERROR\n");
+        return NULL;
+    }
     int len = INIT_LEN;
     int count = 0;
     char ch;
@@ -188,57 +192,13 @@ int shortest_path(graph *g, p_node src, p_node dest) {
     return dest->curr_w;
 }
 
-//Cities *init_cities() {
-//    p_cities cities = (Cities *) malloc(sizeof(Cities));
-//    if (cities == NULL) {
-//        printf("MEMORY ALLOCATION ERROR\n");
-//        return NULL;
-//    }
-//    cities->A_n=NULL;
-//    cities->B_n=NULL;
-//    cities->C_n=NULL;
-//    cities->D_n=NULL;
-//    cities->E_n=NULL;
-//    cities->F_n=NULL;
-//    cities->G_n=NULL;
-//    cities->curr_size=AA;
-//}
-//
-//int add_city(Cities *c, p_node n){
-//    switch (c->curr_size) {
-//        case AA:
-//            c->A_n=n;
-//            c->A_visited=WHITE;
-//            c->curr_size+=1;
-//        case BB:
-//            c->B_n=n;
-//            c->curr_size+=1;
-//        case CC:
-//            c->C_n=n;
-//            c->curr_size+=1;
-//        case DD:
-//            c->D_n=n;
-//            c->curr_size+=1;
-//        case EE:
-//            c->E_n=n;
-//            c->curr_size+=1;
-//        case FF:
-//            c->F_n=n;
-//            c->curr_size+=1;
-//        case GG:
-//            c->G_n=n;
-//            c->curr_size+=1;
-//    }
-//}
-
-
 
 int tsp(p_graph g, p_PQ cities) {
     int min_dist = MAX;
     p_PQ copy_ = copy(cities);
     pq_p curr_start = cities->root;
     while (curr_start != NULL) {
-        int start_id=curr_start->node_ptr->id;
+//        int start_id=curr_start->node_ptr->id;
         pq_p init = cities->root;
         while (init != NULL) {
             init->node_ptr->city_visit = GREY;
@@ -246,7 +206,7 @@ int tsp(p_graph g, p_PQ cities) {
         }
         p_PQ pq = gen_PQ();
         pq_p curr_end = copy_->root;
-        int end_id=curr_end->node_ptr->id;
+//        int end_id=curr_end->node_ptr->id;
         while (curr_end != NULL) {
             if (curr_start->node_ptr->id != curr_end->node_ptr->id) {
                 push_dijkstra(pq, g, curr_end->node_ptr, curr_start->node_ptr);
@@ -255,15 +215,15 @@ int tsp(p_graph g, p_PQ cities) {
         }
         int sum = 0;
         p_node temp_curr = curr_start->node_ptr;
-        int temp_id=temp_curr->id;
         while (!is_empty(pq)) {
-            int pq_root_id= peeq(pq)->id;
+//            int pq_root_id= peeq(pq)->id;
             dijkstra(g, temp_curr);
             if (sum < MAX || peeq_w_from_src(pq->root) < MAX) {
                 sum += peeq_w_from_src(pq->root);
-            }else{
-                sum=MAX;
+            } else {
+                sum = MAX;
             }
+            temp_curr = peeq(pq);
             pop(pq);
         }
         if (sum < min_dist) {
@@ -299,12 +259,14 @@ int TT(graph *g, char *input, int end) {
             ++curr_ch;
         }
     }
+    ++k;
     int dist = tsp(g, cities);
     if (dist >= MAX) {
         printf("TSP shortest path: %d\n", -1);
     } else {
         printf("TSP shortest path: %d\n", dist);
     }
+    --k;
     return dist;
 }
 
