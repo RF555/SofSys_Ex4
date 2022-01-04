@@ -18,6 +18,8 @@ int add_node(graph *g, int id, edge_list *new_e_list);
 
 int update_in_edges(graph *g, edge_list *new_e_list);
 
+p_node search_n(p_graph g, int id);
+
 int remove_node(graph *g, int id);
 
 int add_edge(graph *g, int src, int w, int dest);

@@ -12,6 +12,8 @@ node *gen_node(int id_) {
     n->next_n = NULL;
     n->prev_n = NULL;
     n->tag = WHITE;
+    n->city = WHITE;
+    n->city_visit = WHITE;
     return n;
 }
 
@@ -23,7 +25,7 @@ int free_n_edges(node *n) {
 
 
 int free_n(node *n) {
-    if (n->prev_n != NULL || n->next_n != NULL /*|| n->out_edges->size > 0 || n->in_edges->size > 0*/) {
+    if (n->prev_n != NULL || n->next_n != NULL) {
         printf("ERROR- please clear node before freeing it!\n");
         return 0;
     } else {

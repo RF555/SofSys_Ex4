@@ -1,7 +1,6 @@
 #include "edges.h"
 
 enum comp {
-//    same_pos = 1, diff_pos = 2, same_w = 4, w1 = 16, w2 = 32
     same_pos = 1, diff_pos = 0, same_w = 1, w1 = 0, w2 = 0, same = 1, diff = 0
 };
 
@@ -18,7 +17,6 @@ enum comp compare_w(edge *e1, edge *e2) {
 
 int compare_e(edge *e1, edge *e2) {
     return compare_pos(e1, e2) && compare_w(e1, e2);
-//    return (compare_w(e1,e2) & compare_pos(e1,e2))==same;
 }
 
 edge *gen_edge(int src_, int w_, int dest_) {
@@ -39,11 +37,10 @@ int print_e(edge *e) {
     if (e == NULL) {
         printf("ERROR can't print- edge is NULL!\n");
     } else {
-        printf("{ src: %d, w: %f, dest: %d }", e->src, e->w, e->dest);
-        return 0;
+        printf("{ src: %d, w: %d, dest: %d }", e->src, e->w, e->dest);
     }
+    return 0;
 }
-
 
 p_e_list init_edge_list() {
     p_e_list pe_list = (edge_list *) malloc(sizeof(edge_list));
@@ -58,7 +55,7 @@ p_e_list init_edge_list() {
 }
 
 int set_e_root(p_e_list pe_list, edge *e) {
-    if (e == NULL && pe_list->size > 0 || e->prev_e != NULL || e->next_e != NULL) {
+    if ((e == NULL && pe_list->size > 0) || e->prev_e != NULL || e->next_e != NULL) {
         printf("ERROR set_e_root- edge has siblings OR is empty and list is not!\n");
         return 0;
     } else {
@@ -81,7 +78,7 @@ int set_e_root(p_e_list pe_list, edge *e) {
 }
 
 int set_e_tail(p_e_list pe_list, edge *e) {
-    if (e == NULL && pe_list->size > 0 || e->prev_e != NULL || e->next_e != NULL) {
+    if ((e == NULL && pe_list->size > 0) || e->prev_e != NULL || e->next_e != NULL) {
         printf("ERROR set_e_tail- edge has siblings OR is empty and list is not!\n");
         return 0;
     }
@@ -98,19 +95,10 @@ p_edge search_e(p_e_list pe_list, edge *e) {
         printf("ERROR- edge is NULL!\n");
         return 0;
     }
-    p_edge curr_l = pe_list->e_root;
-    p_edge curr_r = pe_list->e_tail;
-    while (curr_l != NULL && curr_r != NULL && !compare_e(curr_l, curr_r)) {
-        if (compare_pos(e, curr_l)) {
-            return curr_l;
-        } else {
-            curr_l = curr_l->next_e;
-        }
-        if (compare_pos(e, curr_r)) {
-            return curr_r;
-        } else {
-            curr_r = curr_r->prev_e;
-        }
+    p_edge curr_e = pe_list->e_root;
+    while (curr_e != NULL) {
+        if (compare_pos(curr_e, e)) { return curr_e; }
+        else { curr_e = curr_e->next_e; }
     }
     return NULL;
 }
@@ -207,7 +195,7 @@ int pop_e(p_e_list pe_list, edge *e_) {
 }
 
 int free_edge_list(p_e_list pe_list) {
-    if (pe_list == NULL || pe_list->e_root == NULL && pe_list->e_tail == NULL) {
+    if (pe_list == NULL || (pe_list->e_root == NULL && pe_list->e_tail == NULL)) {
         return 0;
     }
     while (pe_list->e_tail != NULL) {
@@ -234,54 +222,3 @@ int print_e_list(edge_list *e_list) {
     printf(" ] *pe_list = %p\n", e_list);
     return 0;
 }
-
-
-/*
-void init_edge_arr(edge_arr *arr, int init_size) {
-    arr->e_arr = malloc(init_size * sizeof(edge));
-    arr->used = 0;
-    arr->size = init_size;
-}
-
-void add_edge(edge_arr *arr, int src, int w, int dest) {
-    if (arr->used == arr->size) {
-        arr->size *= 2;
-        arr->e_arr = realloc(arr->e_arr, arr->size * sizeof(edge));
-        if (arr->e_arr == NULL) { printf("error\n"); }
-    }
-    arr->e_arr[arr->used++].src = src;
-    arr->e_arr[arr->used].w = w;
-    arr->e_arr[arr->used].dest = dest;
-}
-
-
-int remove_edge(edge_list *arr, edge e) {
-    for (int i = 0; i < arr->used; ++i) {
-//        if (compare_edge(&arr->e_arr[i], &e) == SAME) {
-        if (compare_w(&arr->e_arr[i], &e) & compare_pos(&arr->e_arr[i], &e)) {
-            edge *temp_e = (edge *) malloc(sizeof(edge));
-            if (temp_e == NULL) { printf("error\n"); }
-            temp_e->src = arr->e_arr[arr->used].src;
-            temp_e->w = arr->e_arr[arr->used].w;
-            temp_e->dest = arr->e_arr[arr->used].dest;
-            arr->e_arr[i].src = temp_e->src;
-            arr->e_arr[i].w = temp_e->w;
-            arr->e_arr[i].dest = temp_e->dest;
-            arr->e_arr[arr->used].src = -1;
-            arr->e_arr[arr->used].w = -1;
-            arr->e_arr[arr->used].dest = -1;
-            arr->used--;
-            free(temp_e);
-        }
-    }
-}
-
-edge *gen_edge(edge *e, int src, int w, int dest) {
-    return NULL;
-}
-
-
-int free_edge_list(edge_list *e_list) {
-    return 0;
-}
-*/

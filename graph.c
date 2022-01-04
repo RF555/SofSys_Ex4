@@ -5,17 +5,21 @@ graph *init_graph(int n) {
     if (g == NULL) {
         printf("MEMORY ALLOCATION ERROR\n");
         return NULL;
-    }
-    for (int i = 0; i < n; ++i) {
-        p_node curr_n = gen_node(i);
-        if (i == 0) {
-            g->n_root = curr_n;
-            g->n_tail = curr_n;
-        } else {
-            p_node temp_n = g->n_tail;
-            curr_n->prev_n = temp_n;
-            temp_n->next_n = curr_n;
-            g->n_tail = curr_n;
+    } else if (n == 0) {
+        g->n_tail = NULL;
+        g->n_root = NULL;
+    } else {
+        for (int i = 0; i < n; ++i) {
+            p_node curr_n = gen_node(i);
+            if (i == 0) {
+                g->n_root = curr_n;
+                g->n_tail = curr_n;
+            } else {
+                p_node temp_n = g->n_tail;
+                curr_n->prev_n = temp_n;
+                temp_n->next_n = curr_n;
+                g->n_tail = curr_n;
+            }
         }
     }
     g->node_size = n;
@@ -50,7 +54,6 @@ int add_new_node(graph *g, int id) {
     }
     return 1;
 }
-
 
 int add_node(graph *g, int id, edge_list *new_e_list) {
     if (g->node_size == 0) {
@@ -128,27 +131,7 @@ int update_in_edges(graph *g, edge_list *new_e_list) {
             curr_e = curr_e->next_e;
         }
     }
-/*    p_edge curr_e = new_e_list->e_root;
-    int og_e_size = g->edge_size;
-    while (curr_e != NULL) {
-        p_node dest_n = search_n(g, curr_e->dest);
-        if (dest_n == NULL) {
-            printf("ERROR update_in_edges- dest node doesn't exist!\n");
-            free(dest_n);
-            dest_n = NULL;
-            return 0;
-        }
-        push_edge(dest_n->in_edges, curr_e);
-        g->edge_size += 1;
-        curr_e = curr_e->next_e;
-    }
-    if (og_e_size == g->edge_size) {
-        return 1;
-    } else {
-        printf("ERROR update_in_edges- comparison !\n");
-        return 0;
-    }
-*/
+    return 0;
 }
 
 int add_edge(graph *g, int src, int w, int dest) {
@@ -255,6 +238,10 @@ int remove_node(graph *g, int id) {
 }
 
 int free_graph(graph *g) {
+    if (g->n_root == NULL && g->n_tail == NULL && g->edge_size == 0 && g->node_size == 0) {
+        free(g);
+        return 0;
+    }
     p_node curr_n = g->n_root;
     while (curr_n != NULL) {
         p_node temp = curr_n->next_n;
@@ -270,7 +257,6 @@ int free_graph(graph *g) {
     }
 }
 
-
 int print_graph(p_graph g) {
     printf("[ node_size: %d, edge_size: %d,\n", g->node_size, g->edge_size);
     p_node temp_n = g->n_root;
@@ -280,4 +266,5 @@ int print_graph(p_graph g) {
         temp_n = temp_n->next_n;
     }
     printf("]\n");
+    return 0;
 }
