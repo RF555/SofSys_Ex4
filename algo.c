@@ -37,7 +37,8 @@ int seq_end(char *input) {
 }
 
 int A(graph *g, char *input, int end) {
-    free_graph(g);
+//    free_graph(g);
+    free(g);
     int curr_ch = START;
     char *ptr;
     int init_n = (int) strtol(input + curr_ch, &ptr, 10);
